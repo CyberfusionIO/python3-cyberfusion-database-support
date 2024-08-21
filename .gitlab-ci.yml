@@ -1,0 +1,132 @@
+include:
+  - project: 'shared/gitlab-ci-includes'
+    ref: main
+    file:
+      - '/base.yml'
+      - '/pypi-packages.yml'
+      - '/debian-packages.yml'
+      - '/python.yml'
+
+variables:
+  APTLY_BASE_REPOSITORY: common
+
+stages:
+  - test
+  - build
+  - publish
+
+.unit test and feature test base:
+  script:
+    - !reference [.add repositories, script]
+    - apt-get -y install python3-cyberfusion-common python3-sqlalchemy python3-pymysql python3-psycopg2 python3-sqlalchemy-utils python3-cached-property python3-cyberfusion-cluster-borg-client-support
+    - pip install --no-cache-dir -r requirements/test.txt
+
+.unit test and feature test add mariadb repository:
+  script:
+    - wget -qO - https://mariadb.org/mariadb_release_signing_key.asc | apt-key add -
+    - echo "deb [arch=amd64,arm64,ppc64el] http://ams2.mirrors.digitalocean.com/mariadb/repo/$MARIADB_VERSION/debian $DEBIAN_CODENAME main" > /etc/apt/sources.list.d/mariadb.list
+    - apt-get update
+    - apt-get -y install mariadb-server
+
+.unit test and feature test add postgresql repository:
+  script:
+    - wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+    - echo "deb http://apt.postgresql.org/pub/repos/apt $DEBIAN_CODENAME-pgdg main" > /etc/apt/sources.list.d/postgresql.list
+    - apt-get update
+    - apt-get -y install postgresql-$POSTGRESQL_VERSION
+
+unit test and feature test postgresql:
+  stage: test
+  image: python:3.11
+  services:
+    - name: postgres:$POSTGRESQL_VERSION
+      alias: postgres-gw0
+    - name: postgres:$POSTGRESQL_VERSION
+      alias: postgres-gw1
+    - name: postgres:$POSTGRESQL_VERSION
+      alias: postgres-gw2
+  variables:
+    POSTGRES_PASSWORD: 'AxXpDrd8hdEequRTNzKE6U6k'
+  script:
+    - !reference [.unit test and feature test base, script]
+    - !reference [.unit test and feature test add postgresql repository, script]
+    # -n may not be higher than the amount of services above
+    - PYTHONPATH=$CI_PROJECT_DIR/src:/usr/lib/python3/dist-packages pytest -n 3 tests/ -m postgresql -vvv --junitxml=report-pytest.xml
+      --mariadb-server-host=mariadb --postgresql-server-host=postgres --postgresql-server-password='AxXpDrd8hdEequRTNzKE6U6k' --mariadb-server-password='D8nngLmktFW7ACDWHvdRtmrV'
+  artifacts:
+    reports:
+      junit: report-*.xml
+  parallel:
+    matrix:
+      # Supported versions
+      - POSTGRESQL_VERSION: '13'
+      - POSTGRESQL_VERSION: '14'
+      - POSTGRESQL_VERSION: '15'
+      - POSTGRESQL_VERSION: '16'
+
+unit test and feature test mariadb:
+  stage: test
+  image: python:3.11
+  services:
+    - name: mariadb:$MARIADB_VERSION
+      alias: mariadb-gw0
+    - name: mariadb:$MARIADB_VERSION
+      alias: mariadb-gw1
+    - name: mariadb:$MARIADB_VERSION
+      alias: mariadb-gw2
+  variables:
+    MYSQL_ROOT_PASSWORD: 'D8nngLmktFW7ACDWHvdRtmrV'
+    MYSQL_ROOT_HOST: '%'
+  script:
+    - !reference [.unit test and feature test base, script]
+    - !reference [.unit test and feature test add mariadb repository, script]
+    # -n may not be higher than the amount of services above
+    - PYTHONPATH=$CI_PROJECT_DIR/src:/usr/lib/python3/dist-packages pytest -n 3 tests/ -m mariadb -vvv --junitxml=report-pytest.xml
+      --mariadb-server-host=mariadb --postgresql-server-host=postgres --postgresql-server-password='AxXpDrd8hdEequRTNzKE6U6k' --mariadb-server-password='D8nngLmktFW7ACDWHvdRtmrV'
+  artifacts:
+    reports:
+      junit: report-*.xml
+  parallel:
+    matrix:
+      # LTS versions
+      - MARIADB_VERSION: '10.11'
+      - MARIADB_VERSION: '11.4'
+
+# Previous unit tests and feature tests run for multiple versions of specific database server
+# software. As those unit tests and feature tests run for specific pytest markers, they do not
+# run with coverage. This unit test and feature test runs all tests for the most commonly used
+# server software, with coverage.
+
+unit test and feature test:
+  stage: test
+  image: python:3.11
+  services:
+    # Latest major versions
+    - name: mariadb:11.5
+      alias: mariadb-gw0
+    - name: mariadb:11.5
+      alias: mariadb-gw1
+    - name: mariadb:11.5
+      alias: mariadb-gw2
+    - name: postgres:16
+      alias: postgres-gw0
+    - name: postgres:16
+      alias: postgres-gw1
+    - name: postgres:16
+      alias: postgres-gw2
+  variables:
+    POSTGRES_PASSWORD: 'AxXpDrd8hdEequRTNzKE6U6k'
+    MYSQL_ROOT_PASSWORD: 'D8nngLmktFW7ACDWHvdRtmrV'
+    MYSQL_ROOT_HOST: '%'
+  script:
+    - export MARIADB_VERSION=10.11
+    - export POSTGRESQL_VERSION=14
+    - !reference [.unit test and feature test base, script]
+    - !reference [.unit test and feature test add mariadb repository, script]
+    - !reference [.unit test and feature test add postgresql repository, script]
+    # -n may not be higher than the amount of services above
+    - PYTHONPATH=$CI_PROJECT_DIR/src:/usr/lib/python3/dist-packages pytest -n 3 tests/ -vvv --cov-branch --cov=cyberfusion.DatabaseSupport --cov-config=.coveragerc --cov-fail-under=95 --junitxml=report-pytest.xml
+      --mariadb-server-host=mariadb --postgresql-server-host=postgres --postgresql-server-password='AxXpDrd8hdEequRTNzKE6U6k' --mariadb-server-password='D8nngLmktFW7ACDWHvdRtmrV'
+  artifacts:
+    reports:
+      junit: report-*.xml

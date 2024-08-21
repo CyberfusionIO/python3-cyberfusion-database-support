@@ -1,0 +1,476 @@
+python3-cyberfusion-database-support (2.5.4.7.1) unstable; urgency=low
+
+  - Publish to PyPI
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Wed, 21 Aug 2024 17:29:00 +0200
+
+python3-cyberfusion-database-support (2.5.4.7) unstable; urgency=low
+
+  - Don't validate that source path is in specific directory
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 09 Aug 2024 22:14:00 +0200
+
+python3-cyberfusion-database-support (2.5.4.6) unstable; urgency=low
+
+  - Add root to database users list
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 13 Nov 2023 14:18:00 +0200
+
+python3-cyberfusion-database-support (2.5.4.5) unstable; urgency=low
+
+  - Use subprocess
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 28 Apr 2023 17:40:00 +0200
+
+python3-cyberfusion-database-support (2.5.4.4) unstable; urgency=low
+
+  - Use try_find_executable
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 11 Mar 2023 11:52:00 +0200
+
+python3-cyberfusion-database-support (2.5.4.3) unstable; urgency=low
+
+  - Use find_executable
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 11 Mar 2023 11:20:00 +0200
+
+python3-cyberfusion-database-support (2.5.4.2) unstable; urgency=low
+
+  - Allow % (wildcard) + \ (escape) in database name of database user grant
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 10 Mar 2023 18:21:00 +0200
+
+python3-cyberfusion-database-support (2.5.4.1) unstable; urgency=low
+
+  - Remove requests dependency
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 03 Mar 2023 19:42:00 +0200
+
+python3-cyberfusion-database-support (2.5.4) unstable; urgency=low
+
+  - Rename package to python3-cyberfusion-database-support
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 03 Mar 2023 16:13:00 +0200
+
+python3-cyberfusion-cluster-db-support (2.5.3) unstable; urgency=low
+
+  - Remove RabbitMQ handlers
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 03 Mar 2023 16:08:00 +0200
+
+python3-cyberfusion-cluster-db-support (2.5.2.2) unstable; urgency=low
+
+  - Hardcode borg-extracts path instead of relying on deprecated ClusterBorgClientSupport
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 03 Mar 2023 15:22:00 +0200
+
+python3-cyberfusion-database-support (2.5.2.1) unstable; urgency=low
+
+  - Remove usages script
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 03 Mar 2023 12:04:00 +0200
+
+python3-cyberfusion-database-support (2.5.2) unstable; urgency=low
+
+  - Rename ClusterDBSupport to DatabaseSupport
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 03 Mar 2023 10:44:00 +0200
+
+python3-cyberfusion-database-support (2.5.1.1) unstable; urgency=low
+
+  - Do not use ClusterSupport
+  - Remove dependencies for removed configurations
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 02 Mar 2023 19:57:00 +0200
+
+python3-cyberfusion-database-support (2.5.1) unstable; urgency=low
+
+  - Remove server_software_names auto-detection
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 02 Mar 2023 18:39:00 +0200
+
+python3-cyberfusion-database-support (2.5) unstable; urgency=low
+
+  - Remove configurations
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 02 Mar 2023 11:51:00 +0200
+
+python3-cyberfusion-database-support (2.4.1.1) unstable; urgency=low
+
+  - Set 'socket' in MySQL defaults file if socket
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 19 Dec 2022 16:21:00 +0200
+
+python3-cyberfusion-database-support (2.4.1) unstable; urgency=low
+
+  - dx_database_download_dump: Set allowed domain to nl-a.s3.cyberfusion.cloud
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 19 Dec 2022 13:59:00 +0200
+
+python3-cyberfusion-database-support (2.4) unstable; urgency=low
+
+  - Add Redis instances (moved from ClusterWebSupport)
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Wed, 14 Dec 2022 15:59:00 +0200
+
+python3-cyberfusion-database-support (2.3.3.1) unstable; urgency=low
+
+  - Rewrite databases_usage
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 31 Oct 2022 15:15:00 +0200
+
+python3-cyberfusion-database-support (2.3.3) unstable; urgency=low
+
+  - Add support for MySQL sockets
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 13 Oct 2022 16:22:00 +0200
+
+python3-cyberfusion-database-support (2.3.2.1.1) unstable; urgency=low
+
+  - Rename package to include python3
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 4 Oct 2022 16:59:00 +0200
+
+python3-cyberfusion-database-support (2.3.2.1) unstable; urgency=low
+
+  - Fix bug causing passwords to never be edited
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 20 Sep 2022 15:05:00 +0200
+
+python3-cyberfusion-database-support (2.3.2) unstable; urgency=low
+
+  - Improve parsing database user grants
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Sat, 17 Sep 2022 15:38:00 +0200
+
+python3-cyberfusion-database-support (2.3.1) unstable; urgency=low
+
+  - Use new GitLab CI template
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Wed, 31 Aug 2022 10:51:00 +0200
+
+python3-cyberfusion-database-support (2.3) unstable; urgency=low
+
+  - Add dx_database_download_dump exchange
+  - Restrict allowed source paths in DatabaseImportation
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 26 Jul 2022 11:46:00 +0200
+
+python3-cyberfusion-database-support (2.2.5) unstable; urgency=low
+
+  - Add dx_database_tables_list exchange
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 19 Jul 2022 11:54:00 +0200
+
+python3-cyberfusion-database-support (2.2.4) unstable; urgency=low
+
+  - Add dx_database_upload_dump exchange
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 15 Jul 2022 15:57:00 +0200
+
+python3-cyberfusion-database-support (2.2.3.1) unstable; urgency=low
+
+  - Small fixes for new tmp directory
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 15 Jul 2022 14:59:00 +0200
+
+python3-cyberfusion-database-support (2.2.3) unstable; urgency=low
+
+  - Make dumps to new tmp directory
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 15 Jul 2022 14:25:00 +0200
+
+python3-cyberfusion-database-support (2.2.2) unstable; urgency=low
+
+  - Add dx_database_drop_table exchange
+  - Return MD5 hash on export
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 15 Jul 2022 11:47:00 +0200
+
+python3-cyberfusion-database-support (2.2.1.1.1) unstable; urgency=low
+
+  - dx_database_compare: Use correct KEY_IDENTIFIER_EXCLUSIVE
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 5 Jul 2022 17:57:00 +0200
+
+python3-cyberfusion-database-support (2.2.1.1) unstable; urgency=low
+
+  - Add dx_database_compare to setup.py
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 5 Jul 2022 17:33:00 +0200
+
+python3-cyberfusion-database-support (2.2.1) unstable; urgency=low
+
+  - Add dx_database_compare exchange
+  - dx_database_export: Add exclude tables
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 5 Jul 2022 16:15:00 +0200
+
+python3-cyberfusion-database-support (2.2) unstable; urgency=low
+
+  - Add Table abstraction
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 5 Jul 2022 10:48:00 +0200
+
+python3-cyberfusion-database-support (2.1.1) unstable; urgency=low
+
+  - Update exchanges for RabbitMQ consumer 1.8
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Wed, 15 Jun 2022 14:28:00 +0200
+
+python3-cyberfusion-database-support (2.1) unstable; urgency=low
+
+  - Move dump chown to database export function
+  - Remove unused password parameter from database user edit
+  - Add DatabaseImportation
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 14 Jun 2022 10:19:00 +0200
+
+python3-cyberfusion-database-support (2.0.1) unstable; urgency=low
+
+  - Re-use engines and inspectors
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 13 Jun 2022 15:53:00 +0200
+
+python3-cyberfusion-database-support (2.0) unstable; urgency=low
+
+  - Rewrite library
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 13 Jun 2022 15:43:00 +0200
+
+python3-cyberfusion-database-support (1.7.2.4) unstable; urgency=low
+
+  - dx_database_export: Add chown_username
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 27 May 2022 18:08:00 +0200
+
+python3-cyberfusion-database-support (1.7.2.3.1) unstable; urgency=low
+
+  - Add database name to dump file name
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 2 May 2022 16:45:00 +0200
+
+python3-cyberfusion-database-support (1.7.2.3) unstable; urgency=low
+
+  - Add .sql extension to dump file name
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 28 Apr 2022 10:28:00 +0200
+
+python3-cyberfusion-database-support (1.7.2.2.1) unstable; urgency=low
+
+  - dx_database_import: Log in using unhashed password
+  - dx_database_import: Use host localhost instead of ::1
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 22 Apr 2022 10:13:00 +0200
+
+python3-cyberfusion-database-support (1.7.2.2) unstable; urgency=low
+
+  - Add RabbitMQHandlers infrastructure
+  - Add dx_database_import exchange
+  - Add dx_database_export exchange
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 19 Apr 2022 10:33:00 +0200
+
+python3-cyberfusion-database-support (1.7.2.1.1) unstable; urgency=low
+
+  - Add differences dict to results
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 10 Mar 2022 17:55:00 +0200
+
+python3-cyberfusion-database-support (1.7.2.1) unstable; urgency=low
+
+  - Add database users to unchanged list when password is null
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Wed, 9 Mar 2022 14:38:00 +0200
+
+python3-cyberfusion-database-support (1.7.2) unstable; urgency=low
+
+  - Dump JSON in configuration-manager-present
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Wed, 9 Mar 2022 14:07:00 +0200
+
+python3-cyberfusion-database-support (1.7.1) unstable; urgency=low
+
+  - Pass support to manually initialised object for ClusterSupport 1.25.3
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 3 Mar 2022 17:05:00 +0200
+
+python3-cyberfusion-database-support (1.7) unstable; urgency=low
+
+  - Remove database_detect
+  - Remove database_user_detect
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Wed, 15 Dec 2021 16:07:00 +0200
+
+python3-cyberfusion-database-support (1.6.3.1.3) unstable; urgency=low
+
+  - Skip mysql user
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 3 Dec 2021 14:03:00 +0200
+
+python3-cyberfusion-database-support (1.6.3.1.2) unstable; urgency=low
+
+  - Skip sys database
+  - Skip mariadb.sys user
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 3 Dec 2021 12:10:00 +0200
+
+python3-cyberfusion-database-support (1.6.3.1.1) unstable; urgency=low
+
+  - Pass command as list to CyberfusionCommand
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 19 Oct 2021 18:14:00 +0200
+
+python3-cyberfusion-database-support (1.6.3.1) unstable; urgency=low
+
+  - Use new method to create for ClusterSupport 1.13 compatibility
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 14 Sep 2021 11:29:00 +0200
+
+python3-cyberfusion-database-support (1.6.3) unstable; urgency=low
+
+  - Add exception: DatabaseUserNotFound
+  - DatabaseUser: Set self.password on edit
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 14 Sep 2021 10:57:00 +0200
+
+python3-cyberfusion-database-support (1.6.2.7) unstable; urgency=low
+
+  - Remove now ignored flake8 noqa's
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 30 Aug 2021 09:53:00 +0200
+
+python3-cyberfusion-database-support (1.6.2.6) unstable; urgency=low
+
+  - Bump debhelper compatibility level to 10
+  - Bump Standards-Version to 4.3.0
+  - Remove endpoints from class parameters
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 13 Aug 2021 14:32:00 +0200
+
+python3-cyberfusion-database-support (1.6.2.5) unstable; urgency=low
+
+  - configuration_manager_present: Update cluster group membership checks for
+    each argument
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Wed, 14 Jul 2021 11:25:00 +0200
+
+python3-cyberfusion-database-support (1.6.2.4) unstable; urgency=low
+
+  - Use new support CRUD methods for database_detect, database_user_detect, databases_usage
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 12 Jul 2021 16:54:00 +0200
+
+python3-cyberfusion-database-support (1.6.2.3) unstable; urgency=low
+
+  - configuration_manager_present: Set API database user password to null after create and edit
+  - database_user_detect: Set password to null when POSTing detected database user
+  - DatabaseUser: Make password optional
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 12 Jul 2021 12:48:00 +0200
+
+python3-cyberfusion-database-support (1.6.2.2) unstable; urgency=low
+
+  - DatabaseUserGrant: Allow space in database and table name
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 1 Jul 2021 21:35:00 +0200
+
+python3-cyberfusion-database-support (1.6.2.1) unstable; urgency=low
+
+  - Database: Skip add to data length and index length when None. At least needed to support databases with views
+  - DatabaseUser: Update regex to allow hyphen in name
+  - DatabaseUserGrant: Update regex to allow hyphen in table name and database name
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 21 May 2021 20:01:00 +0200
+
+python3-cyberfusion-database-support (1.6.2) unstable; urgency=low
+
+  - Set read and unlink to False in export
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 14 May 2021 17:46:00 +0200
+
+python3-cyberfusion-database-support (1.6.1) unstable; urgency=low
+
+  - Add server_software_names, server_password, mariadb_server_host, postgresql_server_host, mariadb_server_username, postgresql_server_username
+  - Add MARIADB_SERVER_SOFTWARE_NAME and POSTGRESQL_SERVER_SOFTWARE_NAME, and use instead of cluster groups names
+  - Engines: Construct URLs in set_urls
+  - Fix 'POSTRGES' typo
+  - Database: Update URL construction method
+  - Database: Add get_mysql_authentication_string, load, export, drop
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 11 May 2021 15:07:00 +0200
+
+python3-cyberfusion-database-support (1.6) unstable; urgency=low
+
+  - Implement changing password locally for existing database users
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 23 Apr 2021 17:26:00 +0200
+
+python3-cyberfusion-database-support (1.5.5) unstable; urgency=low
+
+  - Fix backticks around table name ('*' is not literal)
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 30 Mar 2021 10:01:00 +0200
+
+python3-cyberfusion-database-support (1.5.4) unstable; urgency=low
+
+  - Add database user grant
+  - Add exceptions: InvalidInputError, ServerNotSupportedError
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 25 Mar 2021 11:59:00 +0200
+
+python3-cyberfusion-database-support (1.5.3) unstable; urgency=low
+
+  - Add configuration_manager_present
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 23 Mar 2021 14:14:00 +0200
+
+python3-cyberfusion-database-support (1.5.2) unstable; urgency=low
+
+  - Add database create
+  - Add database user create
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 23 Mar 2021 13:56:00 +0200
+
+python3-cyberfusion-database-support (1.5.1) unstable; urgency=low
+
+  - Add server_software_name
+  - POST database user password
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 23 Mar 2021 11:03:00 +0200
+
+python3-cyberfusion-database-support (1.5) unstable; urgency=low
+
+  - Add host to database user
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 18 Mar 2021 17:02:00 +0200
+
+python3-cyberfusion-database-support (1.4) unstable; urgency=low
+
+  - Add database users
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 11 Feb 2021 14:59:00 +0200
+
+python3-cyberfusion-database-support (1.3) unstable; urgency=low
+
+  - Add PostgreSQL support
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Sat, 6 Feb 2021 12:40:00 +0200
+
+python3-cyberfusion-database-support (1.2) unstable; urgency=low
+
+  - Use sum of data_length and index_length of all tables in schema
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 1 Feb 2021 11:12:00 +0200
+
+python3-cyberfusion-database-support (1.1) unstable; urgency=low
+
+  - Set data_length and index_length to 0 if None (catch empty database/schema)
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 29 Jan 2021 12:02:00 +0200
+
+python3-cyberfusion-database-support (1.0) unstable; urgency=low
+
+  - Initial release
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 26 Jan 2021 13:02:00 +0200

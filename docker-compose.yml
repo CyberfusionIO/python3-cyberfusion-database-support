@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:11.5
+    restart: always
+    ports:
+      - "2313:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'D8nngLmktFW7ACDWHvdRtmrV'
+
+  postgresql:
+    image: postgres:16
+    restart: always
+    ports:
+      - "9208:5432"
+    environment:
+      POSTGRES_PASSWORD: 'AxXpDrd8hdEequRTNzKE6U6k'
