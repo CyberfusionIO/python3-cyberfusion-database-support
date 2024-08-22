@@ -2,7 +2,7 @@ Source: python3-cyberfusion-database-support
 Section: misc
 Priority: optional
 Maintainer: William Edwards <wedwards@cyberfusion.nl>
-Build-Depends: python3-all, dh-python, debhelper (>= 10), python3-setuptools
+Build-Depends: python3-all, dh-python, debhelper (>= 10), python3-setuptools, python3-cyberfusion-common
 Standards-Version: 4.3.0
 
 Package: python3-cyberfusion-database-support
@@ -10,6 +10,6 @@ Architecture: all
 Replaces: python3-cyberfusion-cluster-db-support
 Conflicts: python3-cyberfusion-cluster-db-support
 Provides: python3-cyberfusion-cluster-db-support (= 2.5.2.2)
-Depends: python3, python3-cyberfusion-common (>= 2.10.3.1), python3-sqlalchemy, python3-pymysql, python3-psycopg2, python3-sqlalchemy-utils, python3-cached-property, ${misc:Depends}
+Depends: python3, ${python3:Depends}, ${misc:Depends}
 Description: Library for MariaDB and PostgreSQL.
  Library for MariaDB and PostgreSQL.

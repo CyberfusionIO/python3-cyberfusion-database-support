@@ -1,3 +1,9 @@
+python3-cyberfusion-database-support (2.5.4.8) unstable; urgency=low
+
+  - Use pybuild + add pydist file
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 22 Aug 2024 16:24:00 +0200
+
 python3-cyberfusion-database-support (2.5.4.7.1) unstable; urgency=low
 
   - Publish to PyPI
