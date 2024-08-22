@@ -15,7 +15,7 @@ from cyberfusion.DatabaseSupport.exceptions import (
 from cyberfusion.DatabaseSupport.queries import Query
 from cyberfusion.DatabaseSupport.servers import Server
 from cyberfusion.DatabaseSupport.tables import Table
-from tests._utilities import generate_random_string
+from cyberfusion.DatabaseSupport.utilities import generate_random_string
 
 
 @pytest.mark.mariadb

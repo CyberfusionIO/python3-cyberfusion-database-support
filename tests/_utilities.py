@@ -1,15 +1,3 @@
-import secrets
-import string
-
-
-def generate_random_string() -> str:
-    length = 8
-
-    return "".join(
-        secrets.choice(string.ascii_lowercase) for _ in range(length)
-    )
-
-
 def add_worker_id_to_server_host(server_host: str, worker_id: str) -> str:
     """Add pytest-xdist worker ID to server host.
 

@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="python3-cyberfusion-database-support",
-    version="2.5.4.8",
+    version="2.5.4.8.1",
     description="Library for MariaDB and PostgreSQL.",
     long_description=long_description,
     long_description_content_type="text/markdown",

@@ -7,7 +7,7 @@ from sqlalchemy.engine import ResultProxy
 
 from cyberfusion.DatabaseSupport.database_users import DatabaseUser
 from cyberfusion.DatabaseSupport.servers import Server
-from tests._utilities import generate_random_string
+from cyberfusion.DatabaseSupport.utilities import generate_random_string
 
 # Databases
 
