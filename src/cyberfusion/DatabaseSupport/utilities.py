@@ -1,6 +1,8 @@
 """Generic utilities."""
 
 import os
+import secrets
+import string
 from typing import Any, Callable, Optional, TypeVar, Union, cast
 
 F = TypeVar("F", bound=Callable[..., Any])
@@ -65,3 +67,12 @@ def _generate_mariadb_dsn(
         string += f"?unix_socket={host}"
 
     return string
+
+
+def generate_random_string() -> str:
+    """Generate random string."""
+    length = 8
+
+    return "".join(
+        secrets.choice(string.ascii_lowercase) for _ in range(length)
+    )

@@ -1,3 +1,9 @@
+python3-cyberfusion-database-support (2.5.4.8.1) unstable; urgency=low
+
+  - Move generate_random_string out of tests
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Thu, 22 Aug 2024 20:09:00 +0200
+
 python3-cyberfusion-database-support (2.5.4.8) unstable; urgency=low
 
   - Use pybuild + add pydist file

@@ -20,10 +20,8 @@ from cyberfusion.DatabaseSupport.database_users import DatabaseUser
 from cyberfusion.DatabaseSupport.databases import Database
 from cyberfusion.DatabaseSupport.servers import Server
 from cyberfusion.DatabaseSupport.tables import Table
-from tests._utilities import (
-    add_worker_id_to_server_host,
-    generate_random_string,
-)
+from cyberfusion.DatabaseSupport.utilities import generate_random_string
+from tests._utilities import add_worker_id_to_server_host
 
 
 def pytest_addoption(parser: Parser) -> None:

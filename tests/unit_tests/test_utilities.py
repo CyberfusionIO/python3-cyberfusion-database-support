@@ -1,8 +1,8 @@
 from cyberfusion.DatabaseSupport.utilities import (
     _generate_mariadb_dsn,
+    generate_random_string,
     get_host_is_socket,
 )
-from tests._utilities import generate_random_string
 
 
 def test_generate_mariadb_dsn_tcp_without_database_name() -> None:
