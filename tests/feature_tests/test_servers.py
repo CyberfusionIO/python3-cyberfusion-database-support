@@ -1,9 +1,10 @@
-from typing import List
+from __future__ import annotations
+
+from typing import List, Any
 
 import pytest
 import sqlalchemy as sa
 from pytest_mock import MockerFixture  # type: ignore[attr-defined]
-from sqlalchemy.engine import ResultProxy
 
 from cyberfusion.DatabaseSupport.database_users import DatabaseUser
 from cyberfusion.DatabaseSupport.servers import Server
@@ -13,9 +14,7 @@ from cyberfusion.DatabaseSupport.utilities import generate_random_string
 
 
 @pytest.mark.mariadb
-def test_mariadb_databases(
-    mocker: MockerFixture, mariadb_server: Server
-) -> None:
+def test_mariadb_databases(mocker: MockerFixture, mariadb_server: Server) -> None:
     NAME = generate_random_string()
 
     mocker.patch(
@@ -35,25 +34,17 @@ def test_mariadb_databases(
     assert mariadb_server.databases[0].server_software_name == "MariaDB"
 
     assert not any(
-        database.name == "information_schema"
-        for database in mariadb_server.databases
+        database.name == "information_schema" for database in mariadb_server.databases
     )
     assert not any(
-        database.name == "performance_schema"
-        for database in mariadb_server.databases
+        database.name == "performance_schema" for database in mariadb_server.databases
     )
-    assert not any(
-        database.name == "mysql" for database in mariadb_server.databases
-    )
-    assert not any(
-        database.name == "sys" for database in mariadb_server.databases
-    )
+    assert not any(database.name == "mysql" for database in mariadb_server.databases)
+    assert not any(database.name == "sys" for database in mariadb_server.databases)
 
 
 @pytest.mark.postgresql
-def test_postgresql_databases(
-    mocker: MockerFixture, postgresql_server: Server
-) -> None:
+def test_postgresql_databases(mocker: MockerFixture, postgresql_server: Server) -> None:
     NAME = generate_random_string()
 
     mocker.patch(
@@ -74,12 +65,10 @@ def test_postgresql_databases(
     assert postgresql_server.databases[0].server_software_name == "PostgreSQL"
 
     assert not any(
-        database.name == "template0"
-        for database in postgresql_server.databases
+        database.name == "template0" for database in postgresql_server.databases
     )
     assert not any(
-        database.name == "template1"
-        for database in postgresql_server.databases
+        database.name == "template1" for database in postgresql_server.databases
     )
     assert not any(
         database.name == "postgres" for database in postgresql_server.databases
@@ -90,9 +79,7 @@ def test_postgresql_databases(
 
 
 @pytest.mark.mariadb
-def test_mariadb_database_users(
-    mocker: MockerFixture, mariadb_server: Server
-) -> None:
+def test_mariadb_database_users(mocker: MockerFixture, mariadb_server: Server) -> None:
     NAME_1 = generate_random_string()
     HOST_1 = "%"
     PASSWORD_1 = "*E6CC90B878B948C35E92B003C792C46C58C4AF40"
@@ -142,16 +129,14 @@ def test_mariadb_database_users(
     assert mariadb_server.database_users[2].host == "localhost"
 
     assert not any(
-        database.name == "monitoring"
-        for database in mariadb_server.database_users
+        database.name == "monitoring" for database in mariadb_server.database_users
     )
     assert not any(
         database.name == "debian-sys-maint"
         for database in mariadb_server.database_users
     )
     assert not any(
-        database.name == "mariadb.sys"
-        for database in mariadb_server.database_users
+        database.name == "mariadb.sys" for database in mariadb_server.database_users
     )
     assert not any(
         database.name == "mysql" for database in mariadb_server.database_users
@@ -170,15 +155,13 @@ def test_postgresql_database_users(
     class Query:
         """Abstract representation of database query."""
 
-        def __init__(
-            self, *, engine: sa.engine.base.Engine, query: str
-        ) -> None:
+        def __init__(self, *, engine: sa.engine.base.Engine, query: str) -> None:
             """Set attributes and call functions to handle query."""
             self.engine = engine
             self.query = query
 
         @property
-        def result(self) -> "FakeResultProxy":
+        def result(self) -> Any:
             """Set result."""
             if str(self.query).startswith("SELECT rolname"):
 
@@ -222,36 +205,25 @@ def test_postgresql_database_users(
     assert len(postgresql_server.database_users) == 3
 
     assert postgresql_server.database_users[0].name == NAME_1
-    assert (
-        postgresql_server.database_users[0].server_software_name
-        == "PostgreSQL"
-    )
+    assert postgresql_server.database_users[0].server_software_name == "PostgreSQL"
     assert postgresql_server.database_users[0].password == PASSWORD
     assert postgresql_server.database_users[0].host is None
 
     assert postgresql_server.database_users[1].name == NAME_2
-    assert (
-        postgresql_server.database_users[1].server_software_name
-        == "PostgreSQL"
-    )
+    assert postgresql_server.database_users[1].server_software_name == "PostgreSQL"
     assert postgresql_server.database_users[1].password == PASSWORD
     assert postgresql_server.database_users[1].host is None
 
     assert postgresql_server.database_users[2].name == "root"
-    assert (
-        postgresql_server.database_users[2].server_software_name
-        == "PostgreSQL"
-    )
+    assert postgresql_server.database_users[2].server_software_name == "PostgreSQL"
     assert postgresql_server.database_users[2].password == PASSWORD
     assert postgresql_server.database_users[2].host is None
 
     assert not any(
-        database.name == "admin"
-        for database in postgresql_server.database_users
+        database.name == "admin" for database in postgresql_server.database_users
     )
     assert not any(
-        database.name == "postgres"
-        for database in postgresql_server.database_users
+        database.name == "postgres" for database in postgresql_server.database_users
     )
     assert not any(
         database.name == "pg_" for database in postgresql_server.database_users
@@ -310,18 +282,14 @@ def test_mariadb_database_user_grants(
 
     assert mariadb_server.database_user_grants[0].database.name == "*"
     assert (
-        mariadb_server.database_user_grants[0].database_user.name
-        == DATABASE_USER_NAME
+        mariadb_server.database_user_grants[0].database_user.name == DATABASE_USER_NAME
     )
     assert mariadb_server.database_user_grants[0].privilege_names == ["USAGE"]
     assert mariadb_server.database_user_grants[0].table_name == "*"
 
+    assert mariadb_server.database_user_grants[1].database.name == DATABASE_NAME
     assert (
-        mariadb_server.database_user_grants[1].database.name == DATABASE_NAME
-    )
-    assert (
-        mariadb_server.database_user_grants[1].database_user.name
-        == DATABASE_USER_NAME
+        mariadb_server.database_user_grants[1].database_user.name == DATABASE_USER_NAME
     )
     assert mariadb_server.database_user_grants[1].privilege_names == [
         "SELECT",
@@ -330,12 +298,9 @@ def test_mariadb_database_user_grants(
     ]
     assert mariadb_server.database_user_grants[1].table_name == "*"
 
+    assert mariadb_server.database_user_grants[2].database.name == DATABASE_NAME
     assert (
-        mariadb_server.database_user_grants[2].database.name == DATABASE_NAME
-    )
-    assert (
-        mariadb_server.database_user_grants[2].database_user.name
-        == DATABASE_USER_NAME
+        mariadb_server.database_user_grants[2].database_user.name == DATABASE_USER_NAME
     )
     assert mariadb_server.database_user_grants[2].privilege_names == ["ALL"]
     assert mariadb_server.database_user_grants[2].table_name == TABLE_NAME

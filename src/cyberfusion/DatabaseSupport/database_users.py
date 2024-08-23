@@ -112,9 +112,7 @@ class DatabaseUser:
             ],
             query=text(
                 "CREATE USER :name@:host IDENTIFIED BY PASSWORD :password;"
-            ).bindparams(
-                name=self.name, host=self.host, password=self.password
-            ),
+            ).bindparams(name=self.name, host=self.host, password=self.password),
         )
 
     def _create_postgresql(self) -> None:
@@ -123,9 +121,9 @@ class DatabaseUser:
             engine=self.server.support.engines.engines[
                 self.server.support.engines.POSTGRESQL_ENGINE_NAME
             ],
-            query=text(
-                f"CREATE USER {self.name} WITH PASSWORD :password;"
-            ).bindparams(password=self.password),
+            query=text(f"CREATE USER {self.name} WITH PASSWORD :password;").bindparams(
+                password=self.password
+            ),
         )
 
     @object_not_exists
@@ -205,9 +203,9 @@ class DatabaseUser:
             engine=self.server.support.engines.engines[
                 self.server.support.engines.POSTGRESQL_ENGINE_NAME
             ],
-            query=text(
-                f"ALTER USER {self.name} WITH PASSWORD :password;"
-            ).bindparams(password=self.password),
+            query=text(f"ALTER USER {self.name} WITH PASSWORD :password;").bindparams(
+                password=self.password
+            ),
         )
 
     def edit(self) -> bool:

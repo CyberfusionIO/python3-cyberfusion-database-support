@@ -1,7 +1,7 @@
 import os
 import shutil
 import uuid
-from typing import Generator, List
+from typing import Generator
 
 import pytest
 from _pytest.config.argparsing import Parser
@@ -27,12 +27,8 @@ from tests._utilities import add_worker_id_to_server_host
 def pytest_addoption(parser: Parser) -> None:
     parser.addoption("--mariadb-server-host", action="store", required=True)
     parser.addoption("--postgresql-server-host", action="store", required=True)
-    parser.addoption(
-        "--mariadb-server-password", action="store", required=True
-    )
-    parser.addoption(
-        "--postgresql-server-password", action="store", required=True
-    )
+    parser.addoption("--mariadb-server-password", action="store", required=True)
+    parser.addoption("--postgresql-server-password", action="store", required=True)
 
 
 @pytest.fixture
@@ -43,9 +39,7 @@ def mariadb_server_host(request: pytest.FixtureRequest, worker_id: str) -> str:
 
 
 @pytest.fixture
-def postgresql_server_host(
-    request: pytest.FixtureRequest, worker_id: str
-) -> str:
+def postgresql_server_host(request: pytest.FixtureRequest, worker_id: str) -> str:
     return add_worker_id_to_server_host(
         request.config.getoption("--postgresql-server-host"), worker_id
     )
@@ -289,9 +283,7 @@ def mariadb_table_1(
 def mariadb_table_2(
     mariadb_database_created_1: Generator[Database, None, None],
 ) -> Generator[Table, None, None]:
-    table = Table(
-        database=mariadb_database_created_1, name=generate_random_string()
-    )
+    table = Table(database=mariadb_database_created_1, name=generate_random_string())
 
     yield table
 
@@ -356,7 +348,7 @@ def mariadb_table_created_2(
 
 @pytest.fixture
 def postgresql_schema_created(
-    postgresql_database_created_1: Generator[Database, None, None]
+    postgresql_database_created_1: Generator[Database, None, None],
 ) -> Generator[str, None, None]:
     name = postgresql_database_created_1.name
 
@@ -378,9 +370,7 @@ def postgresql_schema_created(
 def postgresql_table_1(
     postgresql_database_created_1: Generator[Database, None, None],
 ) -> Generator[Table, None, None]:
-    table = Table(
-        database=postgresql_database_created_1, name=generate_random_string()
-    )
+    table = Table(database=postgresql_database_created_1, name=generate_random_string())
 
     yield table
 
@@ -420,9 +410,7 @@ def postgresql_table_created_1(
 def postgresql_table_2(
     postgresql_database_created_2: Generator[Database, None, None],
 ) -> Generator[Table, None, None]:
-    table = Table(
-        database=postgresql_database_created_2, name=generate_random_string()
-    )
+    table = Table(database=postgresql_database_created_2, name=generate_random_string())
 
     yield table
 

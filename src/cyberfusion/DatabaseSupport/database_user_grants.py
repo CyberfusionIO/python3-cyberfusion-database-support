@@ -112,25 +112,17 @@ class DatabaseUserGrant:
     @property
     def exists(self) -> bool:
         """Get database user grant exists locally."""
-        for (
-            database_user_grant
-        ) in self.database_user.server.database_user_grants:
+        for database_user_grant in self.database_user.server.database_user_grants:
             if database_user_grant.table_name != self.table_name:
                 continue
 
             if database_user_grant.privilege_names != self.privilege_names:
                 continue
 
-            if (
-                database_user_grant.database_user.name
-                != self.database_user.name
-            ):
+            if database_user_grant.database_user.name != self.database_user.name:
                 continue
 
-            if (
-                database_user_grant.database_user.host
-                != self.database_user.host
-            ):
+            if database_user_grant.database_user.host != self.database_user.host:
                 continue
 
             if database_user_grant.database.name != self.database_name:

@@ -3,7 +3,6 @@ from typing import Generator
 import pytest
 
 from cyberfusion.DatabaseSupport.database_users import DatabaseUser
-from cyberfusion.DatabaseSupport.databases import Database
 from cyberfusion.DatabaseSupport.exceptions import (
     InvalidInputError,
     PasswordMissingError,

@@ -1,5 +1,3 @@
-import os
-
 from cyberfusion.DatabaseSupport import DatabaseSupport
 
 
