@@ -51,7 +51,7 @@ unit test and feature test postgresql:
     - !reference [.unit test and feature test base, script]
     - !reference [.unit test and feature test add postgresql repository, script]
     # -n may not be higher than the amount of services above
-    - PYTHONPATH=$CI_PROJECT_DIR/src:/usr/lib/python3/dist-packages pytest -n 3 tests/ -m postgresql -vvv --junitxml=report-pytest.xml
+    - pytest -n 3 tests/ -m postgresql -vvv --junitxml=report-pytest.xml
       --mariadb-server-host=mariadb --postgresql-server-host=postgres --postgresql-server-password='AxXpDrd8hdEequRTNzKE6U6k' --mariadb-server-password='D8nngLmktFW7ACDWHvdRtmrV'
   artifacts:
     reports:
@@ -81,7 +81,7 @@ unit test and feature test mariadb:
     - !reference [.unit test and feature test base, script]
     - !reference [.unit test and feature test add mariadb repository, script]
     # -n may not be higher than the amount of services above
-    - PYTHONPATH=$CI_PROJECT_DIR/src:/usr/lib/python3/dist-packages pytest -n 3 tests/ -m mariadb -vvv --junitxml=report-pytest.xml
+    - pytest -n 3 tests/ -m mariadb -vvv --junitxml=report-pytest.xml
       --mariadb-server-host=mariadb --postgresql-server-host=postgres --postgresql-server-password='AxXpDrd8hdEequRTNzKE6U6k' --mariadb-server-password='D8nngLmktFW7ACDWHvdRtmrV'
   artifacts:
     reports:
@@ -125,7 +125,7 @@ unit test and feature test:
     - !reference [.unit test and feature test add mariadb repository, script]
     - !reference [.unit test and feature test add postgresql repository, script]
     # -n may not be higher than the amount of services above
-    - PYTHONPATH=$CI_PROJECT_DIR/src:/usr/lib/python3/dist-packages pytest -n 3 tests/ -vvv --cov-branch --cov=cyberfusion.DatabaseSupport --cov-config=.coveragerc --cov-fail-under=95 --junitxml=report-pytest.xml
+    - pytest -n 3 tests/ -vvv --cov-branch --cov=cyberfusion.DatabaseSupport --cov-config=.coveragerc --cov-fail-under=95 --junitxml=report-pytest.xml
       --mariadb-server-host=mariadb --postgresql-server-host=postgres --postgresql-server-password='AxXpDrd8hdEequRTNzKE6U6k' --mariadb-server-password='D8nngLmktFW7ACDWHvdRtmrV'
   artifacts:
     reports:
