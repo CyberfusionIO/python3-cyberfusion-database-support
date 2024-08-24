@@ -73,6 +73,4 @@ def generate_random_string() -> str:
     """Generate random string."""
     length = 8
 
-    return "".join(
-        secrets.choice(string.ascii_lowercase) for _ in range(length)
-    )
+    return "".join(secrets.choice(string.ascii_lowercase) for _ in range(length))

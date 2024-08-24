@@ -64,9 +64,7 @@ class Database:
         return (
             self.support.engines.urls[
                 self.support.engines.POSTGRESQL_ENGINE_NAME
-            ].rsplit(
-                "/", 1
-            )[  # PostgreSQL URL already contains database name
+            ].rsplit("/", 1)[  # PostgreSQL URL already contains database name
                 0
             ]
             + "/"
@@ -76,10 +74,7 @@ class Database:
     @property
     def url(self) -> str:
         """Get database engine URL."""
-        if (
-            self.server_software_name
-            == self.support.MARIADB_SERVER_SOFTWARE_NAME
-        ):
+        if self.server_software_name == self.support.MARIADB_SERVER_SOFTWARE_NAME:
             return self._mariadb_url
 
         return self._postgresql_url
@@ -107,14 +102,14 @@ class Database:
             )
         ] = self.support.mariadb_server_host
 
-        _mysql_credentials_config["client"][
-            "user"
-        ] = self.support.mariadb_server_username
+        _mysql_credentials_config["client"]["user"] = (
+            self.support.mariadb_server_username
+        )
 
         if self.support.server_password:
-            _mysql_credentials_config["client"][
-                "password"
-            ] = self.support.server_password
+            _mysql_credentials_config["client"]["password"] = (
+                self.support.server_password
+            )
 
         # Write to tmp file
 
@@ -145,18 +140,13 @@ class Database:
         is are automatically cleaned up using systemd-tmpfiles, if this library
         is installed as a Debian package.
         """
-        if (
-            self.server_software_name
-            != self.support.MARIADB_SERVER_SOFTWARE_NAME
-        ):
+        if self.server_software_name != self.support.MARIADB_SERVER_SOFTWARE_NAME:
             raise ServerNotSupportedError
 
         # Construct command
 
         _command = [self.MYSQLDUMP_BIN]
-        _command.append(
-            f"--defaults-extra-file={self._mysql_credentials_config_file}"
-        )
+        _command.append(f"--defaults-extra-file={self._mysql_credentials_config_file}")
         _command.extend(["--opt", "--single-transaction", "-a", self.name])
 
         # Ignore excluded tables
@@ -198,16 +188,11 @@ class Database:
 
     def load(self, dump_file: TextIOWrapper) -> None:
         """Load (import) database."""
-        if (
-            self.server_software_name
-            != self.support.MARIADB_SERVER_SOFTWARE_NAME
-        ):
+        if self.server_software_name != self.support.MARIADB_SERVER_SOFTWARE_NAME:
             raise ServerNotSupportedError
 
         _command = [self.MYSQL_BIN]
-        _command.append(
-            f"--defaults-extra-file={self._mysql_credentials_config_file}"
-        )
+        _command.append(f"--defaults-extra-file={self._mysql_credentials_config_file}")
         _command.append(self.name)
 
         subprocess.run(
@@ -245,9 +230,7 @@ class Database:
         ).bindparams(name=self.name)
 
         for result in Query(
-            engine=self.support.engines.engines[
-                self.support.engines.MYSQL_ENGINE_NAME
-            ],
+            engine=self.support.engines.engines[self.support.engines.MYSQL_ENGINE_NAME],
             query=data_length_query,
         ).result:
             if result[0] is None:  # None when e.g. view
@@ -263,9 +246,7 @@ class Database:
         ).bindparams(name=self.name)
 
         for result in Query(
-            engine=self.support.engines.engines[
-                self.support.engines.MYSQL_ENGINE_NAME
-            ],
+            engine=self.support.engines.engines[self.support.engines.MYSQL_ENGINE_NAME],
             query=index_length_query,
         ).result:
             if result[0] is None:  # None when e.g. view
@@ -284,9 +265,9 @@ class Database:
         # Get database size
 
         database_size = 0
-        database_size_query = text(
-            "SELECT pg_database_size(:name);"
-        ).bindparams(name=self.name)
+        database_size_query = text("SELECT pg_database_size(:name);").bindparams(
+            name=self.name
+        )
 
         for result in Query(
             engine=self.support.engines.engines[
@@ -301,10 +282,7 @@ class Database:
     @property
     def size(self) -> int:
         """Get size."""
-        if (
-            self.server_software_name
-            == self.support.MARIADB_SERVER_SOFTWARE_NAME
-        ):
+        if self.server_software_name == self.support.MARIADB_SERVER_SOFTWARE_NAME:
             return self._mariadb_size
 
         return self._postgresql_size
@@ -336,10 +314,7 @@ class Database:
 
         # Set metadata
 
-        if (
-            self.server_software_name
-            == self.support.MARIADB_SERVER_SOFTWARE_NAME
-        ):
+        if self.server_software_name == self.support.MARIADB_SERVER_SOFTWARE_NAME:
             metadata = self._mariadb_metadata
         else:
             metadata = self._postgresql_metadata
@@ -375,10 +350,7 @@ class Database:
         * Tables that are only present in right (not in left). These tables can
           be considered removed from left.
         """
-        if (
-            self.server_software_name
-            != self.support.MARIADB_SERVER_SOFTWARE_NAME
-        ):
+        if self.server_software_name != self.support.MARIADB_SERVER_SOFTWARE_NAME:
             raise ServerNotSupportedError
 
         present_in_left_and_right = {}
@@ -388,10 +360,7 @@ class Database:
         # Get tables that are only present in right
 
         for right_table in right_database.tables:
-            if any(
-                right_table.name == left_table.name
-                for left_table in self.tables
-            ):
+            if any(right_table.name == left_table.name for left_table in self.tables):
                 continue
 
             present_in_only_right.append(right_table.name)

@@ -185,18 +185,14 @@ def test_mariadb_database_user_grant_create_when_not_exists(
 
 @pytest.mark.mariadb
 def test_mariadb_database_user_grant_not_create_when_exists(
-    mariadb_database_user_grant_created: Generator[
-        DatabaseUserGrant, None, None
-    ],
+    mariadb_database_user_grant_created: Generator[DatabaseUserGrant, None, None],
 ) -> None:
     assert not mariadb_database_user_grant_created.create()
 
 
 @pytest.mark.mariadb
 def test_mariadb_database_user_grant_exists(
-    mariadb_database_user_grant_created: Generator[
-        DatabaseUserGrant, None, None
-    ],
+    mariadb_database_user_grant_created: Generator[DatabaseUserGrant, None, None],
 ) -> None:
     assert mariadb_database_user_grant_created.exists
 
@@ -211,9 +207,7 @@ def test_mariadb_database_user_grant_not_exists(
 
 @pytest.mark.mariadb
 def test_mariadb_database_user_grant_not_exists_by_table_name(
-    mariadb_database_user_grant_created: Generator[
-        DatabaseUserGrant, None, None
-    ],
+    mariadb_database_user_grant_created: Generator[DatabaseUserGrant, None, None],
     mariadb_table_created_1: Generator[Table, None, None],
 ) -> None:
     assert not DatabaseUserGrant(
@@ -227,9 +221,7 @@ def test_mariadb_database_user_grant_not_exists_by_table_name(
 
 @pytest.mark.mariadb
 def test_mariadb_database_user_grant_not_exists_by_privilege_names(
-    mariadb_database_user_grant_created: Generator[
-        DatabaseUserGrant, None, None
-    ],
+    mariadb_database_user_grant_created: Generator[DatabaseUserGrant, None, None],
 ) -> None:
     assert not DatabaseUserGrant(
         database=mariadb_database_user_grant_created.database,
@@ -243,9 +235,7 @@ def test_mariadb_database_user_grant_not_exists_by_privilege_names(
 @pytest.mark.mariadb
 def test_mariadb_database_user_grant_not_exists_by_database_user_name(
     mariadb_server: Server,
-    mariadb_database_user_grant_created: Generator[
-        DatabaseUserGrant, None, None
-    ],
+    mariadb_database_user_grant_created: Generator[DatabaseUserGrant, None, None],
     mariadb_database_user_created: Generator[DatabaseUser, None, None],
 ) -> None:
     assert not DatabaseUserGrant(
@@ -265,9 +255,7 @@ def test_mariadb_database_user_grant_not_exists_by_database_user_name(
 @pytest.mark.mariadb
 def test_mariadb_database_user_grant_not_exists_by_database_user_host(
     mariadb_server: Server,
-    mariadb_database_user_grant_created: Generator[
-        DatabaseUserGrant, None, None
-    ],
+    mariadb_database_user_grant_created: Generator[DatabaseUserGrant, None, None],
     mariadb_database_user_created: Generator[DatabaseUser, None, None],
 ) -> None:
     assert not DatabaseUserGrant(
@@ -287,9 +275,7 @@ def test_mariadb_database_user_grant_not_exists_by_database_user_host(
 @pytest.mark.mariadb
 def test_mariadb_database_user_grant_not_exists_by_database(
     mariadb_server: Server,
-    mariadb_database_user_grant_created: Generator[
-        DatabaseUserGrant, None, None
-    ],
+    mariadb_database_user_grant_created: Generator[DatabaseUserGrant, None, None],
     mariadb_database_user_created: Generator[DatabaseUser, None, None],
 ) -> None:
     assert not DatabaseUserGrant(

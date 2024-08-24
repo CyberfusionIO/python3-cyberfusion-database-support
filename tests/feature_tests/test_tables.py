@@ -1,19 +1,13 @@
-import os
-import pwd
 from typing import Generator
 
 import pytest
-from pytest_mock import MockerFixture  # type: ignore[attr-defined]
 from sqlalchemy import Table as SQLAlchemyTable
 
-from cyberfusion.DatabaseSupport import DatabaseSupport
 from cyberfusion.DatabaseSupport.databases import Database
 from cyberfusion.DatabaseSupport.exceptions import (
     InvalidInputError,
     ServerNotSupportedError,
 )
-from cyberfusion.DatabaseSupport.queries import Query
-from cyberfusion.DatabaseSupport.servers import Server
 from cyberfusion.DatabaseSupport.tables import Table
 from cyberfusion.DatabaseSupport.utilities import generate_random_string
 
@@ -137,7 +131,7 @@ def test_postgresql_table_drop_when_exists(
 
 @pytest.mark.mariadb
 def test_mariadb_table_checksum(
-    mariadb_table_created_1: Generator[Database, None, None]
+    mariadb_table_created_1: Generator[Database, None, None],
 ) -> None:
     assert mariadb_table_created_1.checksum == 0
 
@@ -152,13 +146,11 @@ def test_postgresql_table_checksum_not_supported(
 
 @pytest.mark.mariadb
 def test_mariadb_table_reflection(
-    mariadb_table_created_1: Generator[Database, None, None]
+    mariadb_table_created_1: Generator[Database, None, None],
 ) -> None:
     assert isinstance(mariadb_table_created_1.reflection, SQLAlchemyTable)
 
-    assert (
-        mariadb_table_created_1.reflection.name == mariadb_table_created_1.name
-    )
+    assert mariadb_table_created_1.reflection.name == mariadb_table_created_1.name
     assert (
         mariadb_table_created_1.reflection.fullname
         == f"{mariadb_table_created_1.database.name}.{mariadb_table_created_1.name}"
@@ -171,14 +163,11 @@ def test_mariadb_table_reflection(
 
 @pytest.mark.postgresql
 def test_postgresql_table_reflection(
-    postgresql_table_created_1: Generator[Database, None, None]
+    postgresql_table_created_1: Generator[Database, None, None],
 ) -> None:
     assert isinstance(postgresql_table_created_1.reflection, SQLAlchemyTable)
 
-    assert (
-        postgresql_table_created_1.reflection.name
-        == postgresql_table_created_1.name
-    )
+    assert postgresql_table_created_1.reflection.name == postgresql_table_created_1.name
     assert (
         postgresql_table_created_1.reflection.fullname
         == f"{postgresql_table_created_1.database.name}.{postgresql_table_created_1.name}"

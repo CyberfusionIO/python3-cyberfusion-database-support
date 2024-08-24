@@ -10,11 +10,9 @@ from sqlalchemy import MetaData
 from cyberfusion.DatabaseSupport import DatabaseSupport
 from cyberfusion.DatabaseSupport.databases import Database
 from cyberfusion.DatabaseSupport.exceptions import ServerNotSupportedError
-from cyberfusion.DatabaseSupport.queries import Query
 from cyberfusion.DatabaseSupport.servers import Server
 from cyberfusion.DatabaseSupport.tables import Table
 from cyberfusion.DatabaseSupport.utilities import generate_random_string
-from tests.conftest import dump_directory
 
 
 @pytest.mark.mariadb
@@ -94,7 +92,7 @@ def test_mariadb_database_not_create_when_exists(
 
 @pytest.mark.mariadb
 def test_mariadb_database_exists(
-    mariadb_database_created_1: Generator[Database, None, None]
+    mariadb_database_created_1: Generator[Database, None, None],
 ) -> None:
     assert mariadb_database_created_1.exists
 
@@ -140,8 +138,7 @@ def test_mariadb_mysql_credentials_config_file_without_server_password(
 
     with open(database._mysql_credentials_config_file, "r") as f:
         assert (
-            f.read()
-            == f"[client]\nhost = {mariadb_server_host}\nuser = {USERNAME}\n\n"
+            f.read() == f"[client]\nhost = {mariadb_server_host}\nuser = {USERNAME}\n\n"
         )
 
 
@@ -202,15 +199,13 @@ def test_mariadb_mysql_credentials_config_file_socket(
 
     assert (
         "socket = /run/mysqld/mysql.sock"
-        in open(database._mysql_credentials_config_file, "r")
-        .read()
-        .splitlines()
+        in open(database._mysql_credentials_config_file, "r").read().splitlines()
     )
 
 
 @pytest.mark.mariadb
 def test_mariadb_database_size(
-    mariadb_database_created_1: Generator[Database, None, None]
+    mariadb_database_created_1: Generator[Database, None, None],
 ) -> None:
     assert mariadb_database_created_1.size >= 0
 
@@ -220,9 +215,7 @@ def test_mariadb_database_export_file_name(
     mariadb_database_created_1: Generator[Database, None, None],
     dump_directory: Generator[str, None, None],
 ) -> None:
-    _dump_file, _ = mariadb_database_created_1.export(
-        root_directory=dump_directory
-    )
+    _dump_file, _ = mariadb_database_created_1.export(root_directory=dump_directory)
 
     assert _dump_file.startswith(
         os.path.join(dump_directory, mariadb_database_created_1.name)
@@ -235,9 +228,7 @@ def test_mariadb_database_export_md5_hash(
     mariadb_database_created_1: Generator[Database, None, None],
     dump_directory: Generator[str, None, None],
 ) -> None:
-    _, md5_hash = mariadb_database_created_1.export(
-        root_directory=dump_directory
-    )
+    _, md5_hash = mariadb_database_created_1.export(root_directory=dump_directory)
 
     assert "==" in md5_hash
 
@@ -247,9 +238,7 @@ def test_mariadb_database_export_contents(
     mariadb_database_created_1: Generator[Database, None, None],
     dump_directory: Generator[str, None, None],
 ) -> None:
-    _dump_file, _ = mariadb_database_created_1.export(
-        root_directory=dump_directory
-    )
+    _dump_file, _ = mariadb_database_created_1.export(root_directory=dump_directory)
 
     with open(_dump_file, "r") as f:
         contents = f.read()
@@ -270,15 +259,10 @@ def test_mariadb_database_export_no_exclude_tables(
     with open(_dump_file, "r") as f:
         contents = f.read().splitlines()
 
+    assert f"DROP TABLE IF EXISTS `{mariadb_table_created_1.name}`;" in contents  # Drop
+    assert f"CREATE TABLE `{mariadb_table_created_1.name}` (" in contents  # Create
     assert (
-        f"DROP TABLE IF EXISTS `{mariadb_table_created_1.name}`;" in contents
-    )  # Drop
-    assert (
-        f"CREATE TABLE `{mariadb_table_created_1.name}` (" in contents
-    )  # Create
-    assert (
-        f"-- Dumping data for table `{mariadb_table_created_1.name}`"
-        in contents
+        f"-- Dumping data for table `{mariadb_table_created_1.name}`" in contents
     )  # Modify
 
 
@@ -296,15 +280,11 @@ def test_mariadb_database_export_exclude_tables(
         contents = f.read().splitlines()
 
     assert (
-        f"DROP TABLE IF EXISTS `{mariadb_table_created_1.name}`;"
-        not in contents
+        f"DROP TABLE IF EXISTS `{mariadb_table_created_1.name}`;" not in contents
     )  # Drop
+    assert f"CREATE TABLE `{mariadb_table_created_1.name}` (" not in contents  # Create
     assert (
-        f"CREATE TABLE `{mariadb_table_created_1.name}` (" not in contents
-    )  # Create
-    assert (
-        f"-- Dumping data for table `{mariadb_table_created_1.name}`"
-        not in contents
+        f"-- Dumping data for table `{mariadb_table_created_1.name}`" not in contents
     )  # Modify
 
 
@@ -329,9 +309,7 @@ def test_mariadb_database_export_chown(
 
         pass
 
-    spy_rename.assert_called_once_with(
-        mocker.ANY, passwd.pw_uid, passwd.pw_gid
-    )
+    spy_rename.assert_called_once_with(mocker.ANY, passwd.pw_uid, passwd.pw_gid)
 
     # stat = os.stat(_dump_file)
     # passwd = pwd.getpwnam("nobody")
@@ -342,7 +320,7 @@ def test_mariadb_database_export_chown(
 
 @pytest.mark.mariadb
 def test_mariadb_database_load(
-    mariadb_database_created_1: Generator[Database, None, None]
+    mariadb_database_created_1: Generator[Database, None, None],
 ) -> None:
     with open("mariadb_testing_1.sql", "r") as f:
         mariadb_database_created_1.load(f)
@@ -446,10 +424,7 @@ def test_mariadb_database_metadata(
 ) -> None:
     assert isinstance(mariadb_database_created_1.metadata, MetaData)
 
-    assert (
-        mariadb_database_created_1.metadata.schema
-        == mariadb_database_created_1.name
-    )
+    assert mariadb_database_created_1.metadata.schema == mariadb_database_created_1.name
 
 
 @pytest.mark.mariadb
@@ -459,10 +434,7 @@ def test_mariadb_tables(
 ) -> None:
     assert len(mariadb_database_created_1.tables) == 1
 
-    assert (
-        mariadb_database_created_1.tables[0].name
-        == mariadb_table_created_1.name
-    )
+    assert mariadb_database_created_1.tables[0].name == mariadb_table_created_1.name
     assert (
         mariadb_database_created_1.tables[0].database.name
         == mariadb_database_created_1.name
@@ -477,8 +449,7 @@ def test_postgresql_tables(
     assert len(postgresql_database_created_1.tables) == 1
 
     assert (
-        postgresql_database_created_1.tables[0].name
-        == postgresql_table_created_1.name
+        postgresql_database_created_1.tables[0].name == postgresql_table_created_1.name
     )
     assert (
         postgresql_database_created_1.tables[0].database.name
@@ -512,9 +483,7 @@ def test_mariadb_database_compare(
         present_in_left_and_right,
         present_in_only_left,
         present_in_only_right,
-    ) = mariadb_database_created_1.compare(
-        right_database=mariadb_database_created_2
-    )
+    ) = mariadb_database_created_1.compare(right_database=mariadb_database_created_2)
 
     assert present_in_left_and_right == {
         "table_in_1_and_2_not_identical": False,

@@ -1,8 +1,6 @@
-import os
 from typing import Generator
 
 import pytest
-from pytest_mock import MockerFixture  # type: ignore[attr-defined]
 
 from cyberfusion.DatabaseSupport import DatabaseSupport
 from cyberfusion.DatabaseSupport.database_importation import (
@@ -10,7 +8,6 @@ from cyberfusion.DatabaseSupport.database_importation import (
 )
 from cyberfusion.DatabaseSupport.databases import Database
 from cyberfusion.DatabaseSupport.exceptions import ServerNotSupportedError
-from cyberfusion.DatabaseSupport.servers import Server
 
 
 @pytest.mark.mariadb

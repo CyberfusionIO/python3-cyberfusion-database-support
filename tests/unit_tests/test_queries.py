@@ -7,9 +7,7 @@ from cyberfusion.DatabaseSupport.queries import Query
 
 @pytest.mark.mariadb
 def test_mariadb_query_result(mariadb_support: DatabaseSupport) -> None:
-    query = Query(
-        engine=mariadb_support.engines.engines["mysql"], query="SELECT 1;"
-    )
+    query = Query(engine=mariadb_support.engines.engines["mysql"], query="SELECT 1;")
 
     assert isinstance(query.result, ResultProxy)
 

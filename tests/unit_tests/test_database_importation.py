@@ -18,9 +18,7 @@ def test_mariadb_database_importation_attributes(
 ) -> None:
     # Basic attributes
 
-    assert (
-        database_importation.database_name == mariadb_database_created_1.name
-    )
+    assert database_importation.database_name == mariadb_database_created_1.name
     assert database_importation.source_path == "mariadb_testing_1.sql"
     assert (
         database_importation.server_software_name
@@ -71,8 +69,7 @@ def test_mariadb_database_importation_attributes(
     )
 
     assert (
-        database_importation.privileged_database.name
-        == mariadb_database_created_1.name
+        database_importation.privileged_database.name == mariadb_database_created_1.name
     )
     assert (
         database_importation.privileged_database.server_software_name
@@ -87,10 +84,7 @@ def test_mariadb_database_importation_attributes(
         database_importation.database_user.server
         == database_importation.privileged_server
     )
-    assert (
-        database_importation.database_user.name
-        == database_importation.username
-    )
+    assert database_importation.database_user.name == database_importation.username
     assert (
         database_importation.database_user.server_software_name
         == mariadb_database_created_1.server_software_name

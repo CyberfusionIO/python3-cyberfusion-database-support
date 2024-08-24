@@ -153,9 +153,7 @@ class Server:
 
                 database_name = parsed_part.group(1)
                 table_name = parsed_part.group(2)
-                privilege_names = [
-                    x.strip() for x in parsed_grant.group(1).split(",")
-                ]
+                privilege_names = [x.strip() for x in parsed_grant.group(1).split(",")]
 
                 # Use short version of 'ALL PRIVILEGES'
 
@@ -163,9 +161,7 @@ class Server:
                     if privilege_name != DatabaseUserGrant.LONG_ALL_PRIVILEGES:
                         continue
 
-                    privilege_names[index] = (
-                        DatabaseUserGrant.SHORT_ALL_PRIVILEGES
-                    )
+                    privilege_names[index] = DatabaseUserGrant.SHORT_ALL_PRIVILEGES
 
                 # Get database object
 
@@ -215,9 +211,7 @@ class Server:
         database_users: List[DatabaseUser] = []
 
         for database_user in Query(
-            engine=self.support.engines.engines[
-                self.support.engines.MYSQL_ENGINE_NAME
-            ],
+            engine=self.support.engines.engines[self.support.engines.MYSQL_ENGINE_NAME],
             query=text("SELECT User,Host,Password from mysql.user;"),
         ).result:
             database_user_name = database_user[0]
@@ -263,9 +257,7 @@ class Server:
             ]:
                 continue
 
-            if database_user_name.startswith(
-                self.POSTGRESQL_PREFIX_SYSTEM_USER
-            ):
+            if database_user_name.startswith(self.POSTGRESQL_PREFIX_SYSTEM_USER):
                 continue
 
             password = Query(

@@ -17,9 +17,7 @@ class Engines:
     """Abstract representation of database engines."""
 
     MYSQL_NAME_USER_DEFAULT = "root"
-    MYSQL_HOST_DEFAULT = os.path.join(
-        os.path.sep, "run", "mysqld", "mysqld.sock"
-    )
+    MYSQL_HOST_DEFAULT = os.path.join(os.path.sep, "run", "mysqld", "mysqld.sock")
 
     POSTGRESQL_NAME_USER_DEFAULT = "root"
     POSTGRESQL_HOST_DEFAULT = ""
