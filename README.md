@@ -10,12 +10,6 @@ Run the following command to install the package from PyPI:
 
     pip3 install python3-cyberfusion-database-support
 
-## Generic
-
-Run the following command to create a source distribution:
-
-    python3 setup.py sdist
-
 Next, install PostgreSQL according to the [documentation](https://www.postgresql.org/download/macosx/) (provides `pg_config`, required by `psycopg2`).
 
 ## Debian
