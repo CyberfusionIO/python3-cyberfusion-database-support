@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: 'D8nngLmktFW7ACDWHvdRtmrV'
 
   postgresql:
-    image: postgres:16
+    image: postgres:17
     restart: always
     ports:
       - "9208:5432"

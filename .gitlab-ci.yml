@@ -108,11 +108,11 @@ unit test and feature test:
       alias: mariadb-gw1
     - name: mariadb:11.5
       alias: mariadb-gw2
-    - name: postgres:16
+    - name: postgres:17
       alias: postgres-gw0
-    - name: postgres:16
+    - name: postgres:17
       alias: postgres-gw1
-    - name: postgres:16
+    - name: postgres:17
       alias: postgres-gw2
   variables:
     POSTGRES_PASSWORD: 'AxXpDrd8hdEequRTNzKE6U6k'
