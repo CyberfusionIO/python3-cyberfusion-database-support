@@ -1,3 +1,9 @@
+python3-cyberfusion-database-support (2.5.4.8.3) unstable; urgency=low
+
+  - Let Python package depend on pre-compiled psycopg2
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 22 Aug 2024 15:27:00 +0200
+
 python3-cyberfusion-database-support (2.5.4.8.2) unstable; urgency=low
 
   - Remove deprecated setup.py in favour of pyproject.toml
