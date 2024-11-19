@@ -545,10 +545,8 @@ def mariadb_database_user_grant(
 
     yield database_user_grant
 
-    # Not supported at the moment. Users are cleaned up, so grants should be deleted too.
-    #
-    # if database_user_grant.exists:
-    #     database_user_grant.delete()
+    if database_user_grant.exists:
+        database_user_grant.delete()
 
 
 @pytest.fixture
@@ -567,7 +565,5 @@ def mariadb_database_user_grant_created(
 
     yield database_user_grant
 
-    # Not supported at the moment. Users are cleaned up, so grants should be deleted too.
-    #
-    # if database_user_grant.exists:
-    #     database_user_grant.delete()
+    if database_user_grant.exists:
+        database_user_grant.delete()

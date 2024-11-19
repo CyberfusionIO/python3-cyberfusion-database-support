@@ -289,3 +289,17 @@ def test_mariadb_database_user_grant_not_exists_by_database(
         privilege_names=mariadb_database_user_grant_created.privilege_names,
         table=None,
     ).exists
+
+
+@pytest.mark.mariadb
+def test_mariadb_database_user_grant_not_delete_when_not_exists(
+    mariadb_database_user_grant: Generator[DatabaseUserGrant, None, None],
+) -> None:
+    assert not mariadb_database_user_grant.delete()
+
+
+@pytest.mark.mariadb
+def test_mariadb_database_user_grant_delete_when_exists(
+    mariadb_database_user_grant_created: Generator[DatabaseUserGrant, None, None],
+) -> None:
+    assert mariadb_database_user_grant_created.delete()
