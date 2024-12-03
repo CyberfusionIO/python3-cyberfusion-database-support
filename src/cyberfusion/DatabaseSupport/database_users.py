@@ -144,7 +144,7 @@ class DatabaseUser:
 
         return True
 
-    def _delete_mariadb(self) -> None:
+    def _drop_mariadb(self) -> None:
         """Delete database user for MariaDB."""
         Query(
             engine=self.server.support.engines.engines[
@@ -155,7 +155,7 @@ class DatabaseUser:
             ),
         )
 
-    def _delete_postgresql(self) -> None:
+    def _drop_postgresql(self) -> None:
         """Delete database user for PostgreSQL."""
         Query(
             engine=self.server.support.engines.engines[
@@ -165,7 +165,7 @@ class DatabaseUser:
         )
 
     @object_exists
-    def delete(self) -> bool:
+    def drop(self) -> bool:
         """Delete database user."""
 
         # Delete database user
@@ -174,11 +174,11 @@ class DatabaseUser:
             self.server_software_name
             == self.server.support.MARIADB_SERVER_SOFTWARE_NAME
         ):
-            self._delete_mariadb()
+            self._drop_mariadb()
 
             return True
 
-        self._delete_postgresql()
+        self._drop_postgresql()
 
         return True
 

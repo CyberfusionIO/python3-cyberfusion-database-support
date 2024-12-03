@@ -149,7 +149,7 @@ class DatabaseUserGrant:
         return ", ".join(self.privilege_names)
 
     @object_not_exists
-    def create(self) -> bool:
+    def grant(self) -> bool:
         """Create database user grant."""
         Query(
             engine=self.database_user.server.support.engines.engines[
@@ -166,7 +166,7 @@ class DatabaseUserGrant:
         return True
 
     @object_exists
-    def delete(self) -> bool:
+    def revoke(self) -> bool:
         """Delete database user grant."""
         Query(
             engine=self.database_user.server.support.engines.engines[

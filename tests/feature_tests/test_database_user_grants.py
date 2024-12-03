@@ -180,14 +180,14 @@ def test_mariadb_database_user_grant_text_table_name_not_wilcard(
 def test_mariadb_database_user_grant_create_when_not_exists(
     mariadb_database_user_grant: Generator[DatabaseUserGrant, None, None],
 ) -> None:
-    assert mariadb_database_user_grant.create()
+    assert mariadb_database_user_grant.grant()
 
 
 @pytest.mark.mariadb
 def test_mariadb_database_user_grant_not_create_when_exists(
     mariadb_database_user_grant_created: Generator[DatabaseUserGrant, None, None],
 ) -> None:
-    assert not mariadb_database_user_grant_created.create()
+    assert not mariadb_database_user_grant_created.grant()
 
 
 @pytest.mark.mariadb
@@ -292,14 +292,14 @@ def test_mariadb_database_user_grant_not_exists_by_database(
 
 
 @pytest.mark.mariadb
-def test_mariadb_database_user_grant_not_delete_when_not_exists(
+def test_mariadb_database_user_grant_not_revoke_when_not_exists(
     mariadb_database_user_grant: Generator[DatabaseUserGrant, None, None],
 ) -> None:
-    assert not mariadb_database_user_grant.delete()
+    assert not mariadb_database_user_grant.revoke()
 
 
 @pytest.mark.mariadb
-def test_mariadb_database_user_grant_delete_when_exists(
+def test_mariadb_database_user_grant_revoke_when_exists(
     mariadb_database_user_grant_created: Generator[DatabaseUserGrant, None, None],
 ) -> None:
-    assert mariadb_database_user_grant_created.delete()
+    assert mariadb_database_user_grant_created.revoke()

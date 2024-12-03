@@ -128,11 +128,11 @@ class DatabaseImportation:
     def _create_objects(self) -> None:
         """Create temporary objects."""
         self.database_user.create()
-        self.database_user_grant.create()
+        self.database_user_grant.grant()
 
     def _delete_objects(self) -> None:
         """Delete temporary objects."""
-        self.database_user.delete()  # Cascading delete for database user grants
+        self.database_user.drop()  # Cascading delete for database user grants
 
     def load(self) -> None:
         """Load (import) database."""
