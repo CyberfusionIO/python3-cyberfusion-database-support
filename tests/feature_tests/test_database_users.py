@@ -72,17 +72,17 @@ def test_postgresql_database_user_host(
 
 
 @pytest.mark.mariadb
-def test_mariadb_database_user_not_delete_when_not_exists(
+def test_mariadb_database_user_not_drop_when_not_exists(
     mariadb_database_user: Generator[DatabaseUser, None, None],
 ) -> None:
-    assert not mariadb_database_user.delete()
+    assert not mariadb_database_user.drop()
 
 
 @pytest.mark.mariadb
-def test_mariadb_database_user_delete_when_exists(
+def test_mariadb_database_user_drop_when_exists(
     mariadb_database_user_created: Generator[DatabaseUser, None, None],
 ) -> None:
-    assert mariadb_database_user_created.delete()
+    assert mariadb_database_user_created.drop()
 
 
 @pytest.mark.mariadb
@@ -191,17 +191,17 @@ def test_mariadb_database_user_edit_password(
 
 
 @pytest.mark.postgresql
-def test_postgresql_database_user_not_delete_when_not_exists(
+def test_postgresql_database_user_not_drop_when_not_exists(
     postgresql_database_user: DatabaseUser,
 ) -> None:
-    assert not postgresql_database_user.delete()
+    assert not postgresql_database_user.drop()
 
 
 @pytest.mark.postgresql
-def test_postgresql_database_user_delete_when_exists(
+def test_postgresql_database_user_drop_when_exists(
     postgresql_database_user_created: DatabaseUser,
 ) -> None:
-    assert postgresql_database_user_created.delete()
+    assert postgresql_database_user_created.drop()
 
 
 @pytest.mark.postgresql

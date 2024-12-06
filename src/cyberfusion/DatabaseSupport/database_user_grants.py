@@ -13,7 +13,7 @@ from cyberfusion.DatabaseSupport.exceptions import (
 )
 from cyberfusion.DatabaseSupport.queries import Query
 from cyberfusion.DatabaseSupport.tables import Table
-from cyberfusion.DatabaseSupport.utilities import object_not_exists
+from cyberfusion.DatabaseSupport.utilities import object_not_exists, object_exists
 
 
 class DatabaseUserGrant:
@@ -149,7 +149,7 @@ class DatabaseUserGrant:
         return ", ".join(self.privilege_names)
 
     @object_not_exists
-    def create(self) -> bool:
+    def grant(self) -> bool:
         """Create database user grant."""
         Query(
             engine=self.database_user.server.support.engines.engines[
@@ -157,6 +157,23 @@ class DatabaseUserGrant:
             ],
             query=text(
                 f"GRANT {self.text_privilege_names} ON `{self.database_name}`.{self.text_table_name} TO :database_user_name@:database_user_host;"
+            ).bindparams(
+                database_user_name=self.database_user.name,
+                database_user_host=self.database_user.host,
+            ),
+        )
+
+        return True
+
+    @object_exists
+    def revoke(self) -> bool:
+        """Delete database user grant."""
+        Query(
+            engine=self.database_user.server.support.engines.engines[
+                self.database.support.engines.MYSQL_ENGINE_NAME
+            ],
+            query=text(
+                f"REVOKE {self.text_privilege_names} ON `{self.database_name}`.{self.text_table_name} FROM :database_user_name@:database_user_host;"
             ).bindparams(
                 database_user_name=self.database_user.name,
                 database_user_host=self.database_user.host,

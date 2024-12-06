@@ -464,7 +464,7 @@ def mariadb_database_user(
     yield database_user
 
     if database_user.exists:
-        database_user.delete()
+        database_user.drop()
 
 
 @pytest.fixture
@@ -484,7 +484,7 @@ def mariadb_database_user_created(
     yield database_user
 
     if database_user.exists:
-        database_user.delete()
+        database_user.drop()
 
 
 # PostgreSQL database user
@@ -505,7 +505,7 @@ def postgresql_database_user(
     yield database_user
 
     if database_user.exists:
-        database_user.delete()
+        database_user.drop()
 
 
 @pytest.fixture
@@ -525,7 +525,7 @@ def postgresql_database_user_created(
     yield database_user
 
     if database_user.exists:
-        database_user.delete()
+        database_user.drop()
 
 
 # MariaDB database user grant
@@ -545,10 +545,8 @@ def mariadb_database_user_grant(
 
     yield database_user_grant
 
-    # Not supported at the moment. Users are cleaned up, so grants should be deleted too.
-    #
-    # if database_user_grant.exists:
-    #     database_user_grant.delete()
+    if database_user_grant.exists:
+        database_user_grant.revoke()
 
 
 @pytest.fixture
@@ -563,11 +561,9 @@ def mariadb_database_user_grant_created(
         table=None,
     )
 
-    database_user_grant.create()
+    database_user_grant.grant()
 
     yield database_user_grant
 
-    # Not supported at the moment. Users are cleaned up, so grants should be deleted too.
-    #
-    # if database_user_grant.exists:
-    #     database_user_grant.delete()
+    if database_user_grant.exists:
+        database_user_grant.revoke()
