@@ -39,7 +39,7 @@ class DatabaseUserGrant:
         self.privilege_names = privilege_names
         self.database_name = self.database.name
 
-        self.table_name: Optional[str] = None  # type: ignore[assignment]
+        self.table_name: Optional[str] = None
 
         if table is not None:
             self.table_name = table.name
