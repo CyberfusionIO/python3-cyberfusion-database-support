@@ -23,15 +23,32 @@ stages:
 
 .unit test and feature test add mariadb repository:
   script:
-    - wget -qO - https://mariadb.org/mariadb_release_signing_key.asc | apt-key add -
-    - echo "deb [arch=amd64,arm64,ppc64el] http://ams2.mirrors.digitalocean.com/mariadb/repo/$MARIADB_VERSION/debian $DEBIAN_CODENAME main" > /etc/apt/sources.list.d/mariadb.list
+    - |
+      cat > /etc/apt/sources.list.d/mariadb.sources << EOF
+      Architectures: amd64 arm64 ppc64el
+      Components: main
+      X-Repolib-Name: mariadb
+      Signed-By: /etc/apt/keyrings/mariadb.asc
+      Suites: $DEBIAN_CODENAME
+      Types: deb
+      URIs: https://mirror.mariadb.org/repo/$MARIADB_VERSION/debian
+      EOF
+    - curl https://mariadb.org/mariadb_release_signing_key.asc -o /etc/apt/keyrings/mariadb.asc
     - apt-get update
     - apt-get -y install mariadb-server
 
 .unit test and feature test add postgresql repository:
   script:
-    - wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-    - echo "deb http://apt.postgresql.org/pub/repos/apt $DEBIAN_CODENAME-pgdg main" > /etc/apt/sources.list.d/postgresql.list
+    - |
+      cat > /etc/apt/sources.list.d/postgresql.sources << EOF
+      Components: main
+      X-Repolib-Name: postgresql
+      Signed-By: /etc/apt/keyrings/postgresql.asc
+      Suites: $DEBIAN_CODENAME-pgdg
+      Types: deb
+      URIs: http://apt.postgresql.org/pub/repos/apt
+      EOF
+    - curl https://www.postgresql.org/media/keys/ACCC4CF8.asc -o /etc/apt/keyrings/postgresql.asc
     - apt-get update
     - apt-get -y install postgresql-$POSTGRESQL_VERSION
 
@@ -66,7 +83,7 @@ unit test and feature test postgresql:
 
 unit test and feature test mariadb:
   stage: test
-  image: python:3.11
+  image: python:3.11-bookworm
   services:
     - name: mariadb:$MARIADB_VERSION
       alias: mariadb-gw0
@@ -99,7 +116,7 @@ unit test and feature test mariadb:
 
 unit test and feature test:
   stage: test
-  image: python:3.11
+  image: python:3.11-bookworm
   services:
     # Latest major versions
     - name: mariadb:11.5
