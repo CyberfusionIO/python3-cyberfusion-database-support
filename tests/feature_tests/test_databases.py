@@ -1,3 +1,4 @@
+import configparser
 import os
 import pwd
 from typing import Generator
@@ -117,6 +118,114 @@ def test_mariadb_database_url(
 
 
 @pytest.mark.mariadb
+def test_mariadb_mysql_credentials_config_file_host(
+    mocker: MockerFixture,
+    mariadb_server_password: str,
+    mariadb_server_host: str,
+) -> None:
+    support = DatabaseSupport(
+        server_software_names=["MariaDB"],
+        server_password=None,
+        mariadb_server_host=mariadb_server_host,
+        mariadb_server_username="root",
+    )
+    server = Server(support=support)
+    database = Database(
+        support=server.support,
+        name=generate_random_string(),
+        server_software_name="MariaDB",
+    )
+
+    host = mariadb_server_host.split(":", 1)[0]
+
+    config = configparser.ConfigParser()
+    config.read_file(open(database._mysql_credentials_config_file))
+
+    assert config.get("client", "host") == host
+
+
+@pytest.mark.mariadb
+def test_mariadb_mysql_credentials_config_file_user(
+    mocker: MockerFixture,
+    mariadb_server_password: str,
+    mariadb_server_host: str,
+) -> None:
+    support = DatabaseSupport(
+        server_software_names=["MariaDB"],
+        server_password=None,
+        mariadb_server_host=mariadb_server_host,
+        mariadb_server_username="root",
+    )
+    server = Server(support=support)
+    database = Database(
+        support=server.support,
+        name=generate_random_string(),
+        server_software_name="MariaDB",
+    )
+
+    config = configparser.ConfigParser()
+    config.read_file(open(database._mysql_credentials_config_file))
+
+    assert config.get("client", "user") == "root"
+
+
+@pytest.mark.mariadb
+def test_mariadb_mysql_credentials_config_file_port_set(
+    mocker: MockerFixture,
+    mariadb_server_password: str,
+) -> None:
+    port = 3307
+
+    mariadb_server_host = "127.0.0.1:" + str(port)
+
+    support = DatabaseSupport(
+        server_software_names=["MariaDB"],
+        server_password=None,
+        mariadb_server_host=mariadb_server_host,
+        mariadb_server_username="root",
+    )
+    server = Server(support=support)
+    database = Database(
+        support=server.support,
+        name=generate_random_string(),
+        server_software_name="MariaDB",
+    )
+
+    port = mariadb_server_host.split(":", 1)[1]
+
+    config = configparser.ConfigParser()
+    config.read_file(open(database._mysql_credentials_config_file))
+
+    assert config.get("client", "port") == port
+
+
+@pytest.mark.mariadb
+def test_mariadb_mysql_credentials_config_file_not_port_set(
+    mocker: MockerFixture,
+    mariadb_server_password: str,
+) -> None:
+    mariadb_server_host = "127.0.0.1"
+
+    support = DatabaseSupport(
+        server_software_names=["MariaDB"],
+        server_password=None,
+        mariadb_server_host=mariadb_server_host,
+        mariadb_server_username="root",
+    )
+    server = Server(support=support)
+    database = Database(
+        support=server.support,
+        name=generate_random_string(),
+        server_software_name="MariaDB",
+    )
+
+    config = configparser.ConfigParser()
+    config.read_file(open(database._mysql_credentials_config_file))
+
+    assert not config.has_option("client", "port")
+
+
+@pytest.mark.mariadb
 def test_mariadb_mysql_credentials_config_file_without_server_password(
     mariadb_server_host: str,
 ) -> None:
@@ -124,7 +233,6 @@ def test_mariadb_mysql_credentials_config_file_without_server_password(
 
     support = DatabaseSupport(
         server_software_names=["MariaDB"],
-        # server_password=mariadb_server_password,
         server_password=None,
         mariadb_server_host=mariadb_server_host,
         mariadb_server_username=USERNAME,
@@ -136,10 +244,10 @@ def test_mariadb_mysql_credentials_config_file_without_server_password(
         server_software_name="MariaDB",
     )
 
-    with open(database._mysql_credentials_config_file, "r") as f:
-        assert (
-            f.read() == f"[client]\nhost = {mariadb_server_host}\nuser = {USERNAME}\n\n"
-        )
+    config = configparser.ConfigParser()
+    config.read_file(open(database._mysql_credentials_config_file))
+
+    assert not config.has_option("client", "password")
 
 
 @pytest.mark.mariadb
@@ -161,11 +269,10 @@ def test_mariadb_mysql_credentials_config_file_with_server_password(
         server_software_name="MariaDB",
     )
 
-    with open(database._mysql_credentials_config_file, "r") as f:
-        assert (
-            f.read()
-            == f"[client]\nhost = {mariadb_server_host}\nuser = root\npassword = {mariadb_server_password}\n\n"
-        )
+    config = configparser.ConfigParser()
+    config.read_file(open(database._mysql_credentials_config_file))
+
+    assert config.get("client", "password") == mariadb_server_password
 
 
 @pytest.mark.mariadb
@@ -197,10 +304,10 @@ def test_mariadb_mysql_credentials_config_file_socket(
         raising=True,
     )
 
-    assert (
-        "socket = /run/mysqld/mysql.sock"
-        in open(database._mysql_credentials_config_file, "r").read().splitlines()
-    )
+    config = configparser.ConfigParser()
+    config.read_file(open(database._mysql_credentials_config_file))
+
+    assert config.get("client", "socket") == "/run/mysqld/mysql.sock"
 
 
 @pytest.mark.mariadb

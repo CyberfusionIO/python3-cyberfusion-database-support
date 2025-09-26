@@ -1,5 +1,6 @@
 """Classes for interaction with databases."""
 
+import urllib.parse
 import configparser
 import os
 import pwd
@@ -87,38 +88,31 @@ class Database:
     @property
     def _mysql_credentials_config_file(self) -> str:
         """Create and set path to file with MySQL credentials config."""
+        config = configparser.ConfigParser()
 
-        # Set config
+        config["client"] = {}
 
-        _mysql_credentials_config = configparser.ConfigParser()
+        if get_host_is_socket(self.support.mariadb_server_host):
+            config["client"]["socket"] = self.support.mariadb_server_host
+        else:
+            url = urllib.parse.urlsplit("//" + self.support.mariadb_server_host)
 
-        _mysql_credentials_config["client"] = {}
+            config["client"]["host"] = url.hostname
 
-        _mysql_credentials_config["client"][
-            (
-                "socket"
-                if get_host_is_socket(self.support.mariadb_server_host)
-                else "host"
-            )
-        ] = self.support.mariadb_server_host
+            if url.port:
+                config["client"]["port"] = str(url.port)
 
-        _mysql_credentials_config["client"]["user"] = (
-            self.support.mariadb_server_username
-        )
+        config["client"]["user"] = self.support.mariadb_server_username
 
         if self.support.server_password:
-            _mysql_credentials_config["client"]["password"] = (
-                self.support.server_password
-            )
+            config["client"]["password"] = self.support.server_password
 
-        # Write to tmp file
+        path = get_tmp_file()
 
-        _mysql_credentials_config_file = get_tmp_file()
+        with open(path, "w") as f:
+            config.write(f)
 
-        with open(_mysql_credentials_config_file, "w") as f:
-            _mysql_credentials_config.write(f)
-
-        return _mysql_credentials_config_file
+        return path
 
     def export(
         self,
