@@ -136,7 +136,7 @@ class Server:
                     grant[0],
                 )
 
-                if not parsed_grant:
+                if not parsed_grant:  # pragma: no cover
                     raise RuntimeError
 
                 if (
@@ -149,7 +149,7 @@ class Server:
                 )
 
                 if not parsed_part:
-                    raise RuntimeError
+                    raise RuntimeError  # pragma: no cover
 
                 database_name = parsed_part.group(1)
                 table_name = parsed_part.group(2)
