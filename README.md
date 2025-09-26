@@ -10,7 +10,10 @@ Run the following command to install the package from PyPI:
 
     pip3 install python3-cyberfusion-database-support
 
-Next, install PostgreSQL according to the [documentation](https://www.postgresql.org/download/macosx/) (provides `pg_config`, required by `psycopg2`).
+Next, install the following software:
+
+* PostgreSQL, according to the [documentation](https://www.postgresql.org/download/macosx/) (provides `pg_config`, required by `psycopg2`).
+* MariaDB client (required by WP-CLI), possibly using [Homebrew](https://formulae.brew.sh/formula/mysql-client).
 
 ## Debian
 
