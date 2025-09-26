@@ -54,7 +54,7 @@ stages:
 
 unit test and feature test postgresql:
   stage: test
-  image: python:3.11
+  image: python:3.11-bookworm
   services:
     - name: postgres:$POSTGRESQL_VERSION
       alias: postgres-gw0
