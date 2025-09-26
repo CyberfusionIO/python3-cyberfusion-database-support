@@ -27,5 +27,5 @@ def test_postgresql_database_importation_not_supported(
             privileged_support=postgresql_support,
             database_name=postgresql_database_created_1.name,
             server_software_name=postgresql_database_created_1.server_software_name,
-            source_path="mariadb_testing_1.sql",
+            source_path="tests/dumps/deviating_tables_1.sql",
         )

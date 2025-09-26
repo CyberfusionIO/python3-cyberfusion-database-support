@@ -429,7 +429,7 @@ def test_mariadb_database_export_chown(
 def test_mariadb_database_load(
     mariadb_database_created_1: Generator[Database, None, None],
 ) -> None:
-    with open("mariadb_testing_1.sql", "r") as f:
+    with open("tests/dumps/deviating_tables_1.sql", "r") as f:
         mariadb_database_created_1.load(f)
 
 
@@ -509,7 +509,7 @@ def test_postgresql_database_load_not_supported(
     postgresql_database_created_1: Generator[Database, None, None],
 ) -> None:
     with pytest.raises(ServerNotSupportedError):
-        with open("mariadb_testing_1.sql", "r") as f:
+        with open("tests/dumps/deviating_tables_1.sql", "r") as f:
             postgresql_database_created_1.load(f)
 
 
@@ -580,10 +580,10 @@ def test_mariadb_database_compare(
     mariadb_database_created_1: Generator[Database, None, None],
     mariadb_database_created_2: Generator[Database, None, None],
 ) -> None:
-    with open("mariadb_testing_1.sql", "r") as f:
+    with open("tests/dumps/deviating_tables_1.sql", "r") as f:
         mariadb_database_created_1.load(f)
 
-    with open("mariadb_testing_2.sql", "r") as f:
+    with open("tests/dumps/deviating_tables_2.sql", "r") as f:
         mariadb_database_created_2.load(f)
 
     (

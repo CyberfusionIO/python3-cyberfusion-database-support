@@ -1,8 +1,8 @@
 -- MySQL dump 10.19  Distrib 10.3.28-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: mariadb_testing_1
+-- Host: localhost    Database: deviating_tables_2
 -- ------------------------------------------------------
--- Server version 10.3.28-MariaDB-1:10.3.28+maria~stretch-log
+-- Server version	10.3.28-MariaDB-1:10.3.28+maria~stretch-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `table_only_in_1`
+-- Table structure for table `table_only_in_2`
 --
 
-DROP TABLE IF EXISTS `table_only_in_1`;
+DROP TABLE IF EXISTS `table_only_in_2`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `table_only_in_1` (
+CREATE TABLE `table_only_in_2` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -48,11 +48,7 @@ CREATE TABLE `table_in_1_and_2_not_identical` (
 LOCK TABLES `table_in_1_and_2_not_identical` WRITE;
 /*!40000 ALTER TABLE `table_in_1_and_2_not_identical` DISABLE KEYS */;
 INSERT INTO `table_in_1_and_2_not_identical` VALUES
-(1),
-(2),
-(3),
-(4),
-(5);
+(1);
 /*!40000 ALTER TABLE `table_in_1_and_2_not_identical` ENABLE KEYS */;
 UNLOCK TABLES;
 
