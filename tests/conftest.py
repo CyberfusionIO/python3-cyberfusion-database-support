@@ -115,7 +115,7 @@ def database_importation(
         privileged_support=mariadb_support,
         database_name=mariadb_database_created_1.name,
         server_software_name=mariadb_database_created_1.server_software_name,
-        source_path="mariadb_testing_1.sql",
+        source_path="tests/dumps/deviating_tables_1.sql",
     )
 
     # Hardcoded to localhost, but server may be on a different hostname in CI

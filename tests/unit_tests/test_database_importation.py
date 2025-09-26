@@ -19,7 +19,7 @@ def test_mariadb_database_importation_attributes(
     # Basic attributes
 
     assert database_importation.database_name == mariadb_database_created_1.name
-    assert database_importation.source_path == "mariadb_testing_1.sql"
+    assert database_importation.source_path == "tests/dumps/deviating_tables_1.sql"
     assert (
         database_importation.server_software_name
         == mariadb_database_created_1.server_software_name
