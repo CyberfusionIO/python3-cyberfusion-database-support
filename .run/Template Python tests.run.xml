@@ -12,7 +12,7 @@
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
     <option name="_new_keywords" value="&quot;&quot;" />
     <option name="_new_parameters" value="&quot;&quot;" />
-    <option name="_new_additionalArguments" value="&quot;--mariadb-server-host\u003d127.0.0.1:2313 --postgresql-server-host\u003d127.0.0.1:9208 --mariadb-server-password\u003d\u0027D8nngLmktFW7ACDWHvdRtmrV\u0027 --postgresql-server-password\u003d\u0027AxXpDrd8hdEequRTNzKE6U6k\u0027&quot;" />
+    <option name="_new_additionalArguments" value="&quot;--mariadb-server-host\u003d127.0.0.1:2313 --postgresql-server-host\u003d127.0.0.1:9208 --mariadb-server-password\u003dD8nngLmktFW7ACDWHvdRtmrV --postgresql-server-password\u003dAxXpDrd8hdEequRTNzKE6U6k&quot;" />
     <option name="_new_target" value="&quot;&quot;" />
     <option name="_new_targetType" value="&quot;PATH&quot;" />
     <method v="2">
