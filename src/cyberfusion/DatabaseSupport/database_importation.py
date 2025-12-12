@@ -1,6 +1,6 @@
 """Classes for importing databases."""
 
-from cached_property import cached_property
+from functools import cached_property
 
 from cyberfusion.Common import hash_string_mariadb
 from cyberfusion.DatabaseSupport import DatabaseSupport

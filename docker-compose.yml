@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mariadb:
-    image: mariadb:11.5
+    image: mariadb:11.8
     restart: always
     ports:
       - "2313:3306"
@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: 'D8nngLmktFW7ACDWHvdRtmrV'
 
   postgresql:
-    image: postgres:18
+    image: postgres:14
     restart: always
     ports:
       - "9208:5432"

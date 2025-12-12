@@ -8,7 +8,6 @@ from _pytest.config.argparsing import Parser
 from pytest_mock import MockerFixture  # type: ignore[attr-defined]
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import Table as SQLAlchemyTable
-from sqlalchemy import create_engine
 from sqlalchemy.schema import CreateSchema, DropSchema
 
 from cyberfusion.DatabaseSupport import DatabaseSupport
@@ -302,6 +301,8 @@ def mariadb_table_created_1(
         name=name,
     )
 
+    engine = mariadb_database_created_1.database_engine
+
     SQLAlchemyTable(
         name,
         mariadb_database_created_1.metadata,
@@ -309,7 +310,8 @@ def mariadb_table_created_1(
         Column("user_name", String(16), nullable=False),
         Column("email_address", String(60)),
         Column("nickname", String(50), nullable=False),
-    ).create()
+        schema=mariadb_database_created_1.name,
+    ).create(engine)
 
     yield table
 
@@ -328,6 +330,8 @@ def mariadb_table_created_2(
         name=name,
     )
 
+    engine = mariadb_database_created_1.database_engine
+
     SQLAlchemyTable(
         name,
         mariadb_database_created_1.metadata,
@@ -335,7 +339,8 @@ def mariadb_table_created_2(
         Column("user_name", String(16), nullable=False),
         Column("email_address", String(60)),
         Column("nickname", String(50), nullable=False),
-    ).create()
+        schema=mariadb_database_created_1.name,
+    ).create(engine)
 
     yield table
 
@@ -352,15 +357,13 @@ def postgresql_schema_created(
 ) -> Generator[str, None, None]:
     name = postgresql_database_created_1.name
 
-    engine = create_engine(
-        postgresql_database_created_1.url
-    )  # Schema creation and deletion relative to current database
-
-    engine.execute(CreateSchema(name))
+    with postgresql_database_created_1.database_engine.begin() as connection:
+        connection.execute(CreateSchema(name))
 
     yield name
 
-    engine.execute(DropSchema(name))
+    with postgresql_database_created_1.database_engine.begin() as connection:
+        connection.execute(DropSchema(name))
 
 
 # PostgreSQL table
@@ -390,6 +393,8 @@ def postgresql_table_created_1(
         name=name,
     )
 
+    engine = postgresql_database_created_1.database_engine
+
     SQLAlchemyTable(
         name,
         postgresql_database_created_1.metadata,
@@ -398,7 +403,7 @@ def postgresql_table_created_1(
         Column("email_address", String(60)),
         Column("nickname", String(50), nullable=False),
         schema=postgresql_schema_created,
-    ).create()
+    ).create(engine)
 
     yield table
 
@@ -430,6 +435,8 @@ def postgresql_table_created_2(
         name=name,
     )
 
+    engine = postgresql_database_created_2.database_engine
+
     SQLAlchemyTable(
         name,
         postgresql_database_created_2.metadata,
@@ -438,7 +445,7 @@ def postgresql_table_created_2(
         Column("email_address", String(60)),
         Column("nickname", String(50), nullable=False),
         schema=postgresql_schema_created,
-    ).create()
+    ).create(engine)
 
     yield table
 
