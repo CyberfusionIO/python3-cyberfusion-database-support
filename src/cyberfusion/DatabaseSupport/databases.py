@@ -4,10 +4,11 @@ import urllib.parse
 import configparser
 import os
 import pwd
+from functools import cached_property
 from typing import TYPE_CHECKING, Dict, List, Optional, Tuple
 
 from _io import TextIOWrapper
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, Engine, create_engine
 
 if TYPE_CHECKING:  # pragma: no cover
     from cyberfusion.DatabaseSupport import DatabaseSupport
@@ -62,10 +63,10 @@ class Database:
     @property
     def _postgresql_url(self) -> str:
         """Get database engine URL for PostgreSQL."""
+        url = self.server_engine.url.render_as_string(hide_password=False)
+
         return (
-            self.support.engines.urls[
-                self.support.engines.POSTGRESQL_ENGINE_NAME
-            ].rsplit("/", 1)[  # PostgreSQL URL already contains database name
+            url.rsplit("/", 1)[  # PostgreSQL URL already contains database name
                 0
             ]
             + "/"
@@ -212,6 +213,17 @@ class Database:
 
         return True
 
+    @cached_property
+    def server_engine(self) -> Engine:
+        if self.server_software_name == self.support.MARIADB_SERVER_SOFTWARE_NAME:
+            return self.support.engines.engines[self.support.engines.MYSQL_ENGINE_NAME]
+
+        return self.support.engines.engines[self.support.engines.POSTGRESQL_ENGINE_NAME]
+
+    @cached_property
+    def database_engine(self) -> Engine:
+        return create_engine(self.url)
+
     @property
     def _mariadb_size(self) -> int:
         """Get size for MariaDB."""
@@ -224,7 +236,7 @@ class Database:
         ).bindparams(name=self.name)
 
         for result in Query(
-            engine=self.support.engines.engines[self.support.engines.MYSQL_ENGINE_NAME],
+            engine=self.server_engine,
             query=data_length_query,
         ).result:
             if result[0] is None:  # None when e.g. view
@@ -240,7 +252,7 @@ class Database:
         ).bindparams(name=self.name)
 
         for result in Query(
-            engine=self.support.engines.engines[self.support.engines.MYSQL_ENGINE_NAME],
+            engine=self.server_engine,
             query=index_length_query,
         ).result:
             if result[0] is None:  # None when e.g. view
@@ -264,9 +276,7 @@ class Database:
         )
 
         for result in Query(
-            engine=self.support.engines.engines[
-                self.support.engines.POSTGRESQL_ENGINE_NAME
-            ],
+            engine=self.server_engine,
             query=database_size_query,
         ).result:
             database_size += result[0]
@@ -282,42 +292,13 @@ class Database:
         return self._postgresql_size
 
     @property
-    def _postgresql_metadata(self) -> MetaData:
-        """Get metadata for PostgreSQL.
-
-        In PostgreSQL, a database has multiple schemas. Objects such as tables
-        belong to a schema, so metadata must be retrieved for a specific schema.
-        Currently, we assume the schema has the same name as the database.
-        """
-        return MetaData(
-            bind=self.url,  # Metadata is retrieved for database specified in URL
-            schema=self.name,
-        )
-
-    @property
-    def _mariadb_metadata(self) -> MetaData:
-        """Get metadata for MariaDB."""
-        return MetaData(
-            bind=self.url,
-            schema=self.name,
-        )
-
-    @property
     def metadata(self) -> MetaData:
         """Get metadata with SQLAlchemy."""
+        metadata_obj = MetaData(schema=self.name)
 
-        # Set metadata
+        metadata_obj.reflect(bind=self.database_engine)
 
-        if self.server_software_name == self.support.MARIADB_SERVER_SOFTWARE_NAME:
-            metadata = self._mariadb_metadata
-        else:
-            metadata = self._postgresql_metadata
-
-        # Reflect tables
-
-        metadata.reflect()
-
-        return metadata
+        return metadata_obj
 
     @property
     def tables(self) -> List[Table]:

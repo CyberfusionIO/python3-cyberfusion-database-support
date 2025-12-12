@@ -1,9 +1,16 @@
+python3-cyberfusion-database-support (3.2.0) unstable; urgency=low
+
+  - Support port in config
+  - Add InnoDB report
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Fri, 12 Dec 2025 17:41:00 +0200
+
 python3-cyberfusion-database-support (3.1.0) unstable; urgency=low
 
   - Support port in config
   - Add InnoDB report
 
- -- William Edwards <wedwards@cyberfusion.nl>  Tue, 23 Sep 2024 11:17:00 +0200
+ -- William Edwards <wedwards@cyberfusion.nl>  Tue, 23 Sep 2025 11:17:00 +0200
 
 python3-cyberfusion-database-support (3.0.0) unstable; urgency=low
 

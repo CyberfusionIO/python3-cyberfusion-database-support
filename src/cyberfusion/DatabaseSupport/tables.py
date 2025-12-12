@@ -91,6 +91,6 @@ class Table:
     @object_exists
     def drop(self) -> bool:
         """Drop table."""
-        self.reflection.drop()
+        self.reflection.drop(bind=self.database.database_engine)
 
         return True

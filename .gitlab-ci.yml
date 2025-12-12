@@ -54,7 +54,7 @@ stages:
 
 unit test and feature test postgresql:
   stage: test
-  image: python:3.11-bookworm
+  image: python:3.13
   services:
     - name: postgres:$POSTGRESQL_VERSION
       alias: postgres-gw0
@@ -83,7 +83,7 @@ unit test and feature test postgresql:
 
 unit test and feature test mariadb:
   stage: test
-  image: python:3.11-bookworm
+  image: python:3.13
   services:
     - name: mariadb:$MARIADB_VERSION
       alias: mariadb-gw0
@@ -106,8 +106,7 @@ unit test and feature test mariadb:
   parallel:
     matrix:
       # LTS versions
-      - MARIADB_VERSION: '10.11'
-      - MARIADB_VERSION: '11.4'
+      - MARIADB_VERSION: '11.8'
 
 # Previous unit tests and feature tests run for multiple versions of specific database server
 # software. As those unit tests and feature tests run for specific pytest markers, they do not
@@ -116,7 +115,7 @@ unit test and feature test mariadb:
 
 unit test and feature test:
   stage: test
-  image: python:3.11-bookworm
+  image: python:3.13
   services:
     # Latest major versions
     - name: mariadb:11.5
@@ -136,7 +135,7 @@ unit test and feature test:
     MYSQL_ROOT_PASSWORD: 'D8nngLmktFW7ACDWHvdRtmrV'
     MYSQL_ROOT_HOST: '%'
   script:
-    - export MARIADB_VERSION=10.11
+    - export MARIADB_VERSION=11.8
     - export POSTGRESQL_VERSION=14
     - !reference [.unit test and feature test base, script]
     - !reference [.unit test and feature test add mariadb repository, script]

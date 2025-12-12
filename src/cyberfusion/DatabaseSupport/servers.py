@@ -75,7 +75,7 @@ class Server:
             engine=self.support.engines.engines[
                 self.support.engines.POSTGRESQL_ENGINE_NAME
             ],
-            query="SELECT datname FROM pg_database;",
+            query=text("SELECT datname FROM pg_database;"),
         ).result:
             database_name = database_name[0]
 
