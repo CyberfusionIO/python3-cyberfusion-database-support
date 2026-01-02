@@ -267,7 +267,7 @@ class Server:
                 query=text(
                     "SELECT rolpassword FROM pg_authid WHERE rolname=:rolname;"
                 ).bindparams(rolname=database_user_name),
-            ).result.first()[0]
+            ).result[0][0]
 
             database_users.append(
                 DatabaseUser(

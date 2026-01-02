@@ -53,7 +53,7 @@ class InnodbReportGenerator(ReportGeneratorInterface):
                     self.server.support.engines.MYSQL_ENGINE_NAME
                 ],
                 query=text("SELECT @@innodb_buffer_pool_size;"),
-            ).result.first()[0]
+            ).result[0][0]
         )
 
     def get_databases_innodb_data_lengths(self) -> list[DatabaseInnodbDataLengths]:

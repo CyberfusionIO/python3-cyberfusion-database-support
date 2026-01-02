@@ -76,7 +76,7 @@ class Table:
             query=text(
                 f"CHECKSUM TABLE `{self.database.name}`.`{self.name}`;"
             ).bindparams(),
-        ).result.first()[1]
+        ).result[0][1]
 
     @property
     def _table_name_with_schema_name(self) -> str:
