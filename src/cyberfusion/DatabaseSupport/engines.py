@@ -6,6 +6,8 @@ from typing import TYPE_CHECKING, Dict
 import sqlalchemy as sa
 from functools import cached_property
 
+from sqlalchemy.pool import NullPool
+
 from cyberfusion.DatabaseSupport.servers import Server
 from cyberfusion.DatabaseSupport.utilities import _generate_mariadb_dsn
 
@@ -80,7 +82,7 @@ class Engines:
             in self.support.server_software_names
         ):
             engines[self.MYSQL_ENGINE_NAME] = sa.create_engine(
-                self.urls[self.MYSQL_ENGINE_NAME],
+                self.urls[self.MYSQL_ENGINE_NAME], poolclass=NullPool
             )
 
         if (
@@ -88,7 +90,7 @@ class Engines:
             in self.support.server_software_names
         ):
             engines[self.POSTGRESQL_ENGINE_NAME] = sa.create_engine(
-                self.urls[self.POSTGRESQL_ENGINE_NAME],
+                self.urls[self.POSTGRESQL_ENGINE_NAME], poolclass=NullPool
             )
 
         return engines

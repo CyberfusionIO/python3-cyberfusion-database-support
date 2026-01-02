@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Any
+from typing import Any
 
 import pytest
 import sqlalchemy as sa
@@ -164,37 +164,17 @@ def test_postgresql_database_users(
         def result(self) -> Any:
             """Set result."""
             if str(self.query).startswith("SELECT rolname"):
-
-                class FakeResultProxy:
-                    """Fake implementation of ResultProxy."""
-
-                    def __init__(self) -> None:
-                        self._value = [
-                            (NAME_1,),
-                            (NAME_2,),
-                            ("root",),
-                            ("admin",),
-                            ("postgres",),
-                            ("pg_test",),
-                        ]
-
-                    def __iter__(self) -> None:
-                        return iter(self._value)
-
-                return FakeResultProxy()
+                return [
+                    (NAME_1,),
+                    (NAME_2,),
+                    ("root",),
+                    ("admin",),
+                    ("postgres",),
+                    ("pg_test",),
+                ]
 
             elif str(self.query).startswith("SELECT rolpassword"):
-
-                class FakeResultProxy:
-                    """Fake implementation of ResultProxy."""
-
-                    def __init__(self) -> None:
-                        self._value = [(PASSWORD,)]
-
-                    def first(self) -> List[tuple]:
-                        return self._value[0]
-
-                return FakeResultProxy()
+                return [(PASSWORD,)]
 
             return mocker.DEFAULT
 

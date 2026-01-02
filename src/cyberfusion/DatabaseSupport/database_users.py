@@ -51,7 +51,7 @@ class DatabaseUser:
                 query=text(
                     "SELECT Password from mysql.user WHERE User=:name AND Host=:host;"
                 ).bindparams(name=self.name, host=self.host),
-            ).result.first()[0]
+            ).result[0][0]
 
         return Query(
             engine=self.server.support.engines.engines[
@@ -60,7 +60,7 @@ class DatabaseUser:
             query=text(
                 "SELECT rolpassword FROM pg_authid WHERE rolname=:rolname;"
             ).bindparams(rolname=self.name),
-        ).result.first()[0]
+        ).result[0][0]
 
     @property
     def name(self) -> str:

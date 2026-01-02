@@ -2,7 +2,6 @@
 
 import sqlalchemy as sa
 from sqlalchemy import TextClause
-from sqlalchemy.engine import ResultProxy
 
 
 class Query:
@@ -18,9 +17,14 @@ class Query:
     def _execute(self) -> None:
         """Execute query."""
         with self.engine.begin() as connection:
-            self._result = connection.execute(self.query)
+            result_proxy = connection.execute(self.query)
+
+            if result_proxy.returns_rows:
+                self._result = result_proxy.all()
+            else:
+                self._result = []
 
     @property
-    def result(self) -> ResultProxy:
+    def result(self) -> list:
         """Get result."""
         return self._result
