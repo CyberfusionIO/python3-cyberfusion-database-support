@@ -6,8 +6,7 @@ python3-cyberfusion-database-support (3.2.1) unstable; urgency=low
 
 python3-cyberfusion-database-support (3.2.0) unstable; urgency=low
 
-  - Support port in config
-  - Add InnoDB report
+  - Update to Trixie
 
  -- William Edwards <wedwards@cyberfusion.nl>  Fri, 12 Dec 2025 17:41:00 +0200
 
