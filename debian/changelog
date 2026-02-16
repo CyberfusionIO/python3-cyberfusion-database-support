@@ -1,3 +1,10 @@
+python3-cyberfusion-database-support (3.3) unstable; urgency=low
+
+  - Add Server.get_global_status_variable
+  - Add `wait_wsrep_ready` script and systemd unit
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Mon, 16 Feb 2026 09:53:00 +0200
+
 python3-cyberfusion-database-support (3.2.2) unstable; urgency=low
 
   - Update dependencies

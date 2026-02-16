@@ -1,7 +1,7 @@
 """Classes for interaction with database servers."""
 
 import re
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Optional
 
 if TYPE_CHECKING:  # pragma: no cover
     from cyberfusion.DatabaseSupport import DatabaseSupport
@@ -299,3 +299,14 @@ class Server:
             database_users.extend(self._postgresql_database_users)
 
         return database_users
+
+    def get_global_status_variable(self, name: str) -> Optional[str]:
+        result = Query(
+            engine=self.support.engines.engines[self.support.engines.MYSQL_ENGINE_NAME],
+            query=text("SHOW GLOBAL STATUS LIKE :name").bindparams(name=name),
+        ).result
+
+        if not result:
+            return None
+
+        return result[0][1]

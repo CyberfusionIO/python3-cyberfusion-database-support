@@ -1,0 +1,15 @@
+[Unit]
+Description=Wait for MariaDB wsrep_ready
+After=mariadb.service
+Requires=mariadb.service
+Before=multi-user.target
+
+[Service]
+Type=oneshot
+Environment=HOST=/run/mysqld/mysqld.sock
+Environment=USERNAME=root
+ExecStart=/usr/bin/mariadb-wait-wsrep-ready --host $HOST --username $USERNAME
+TimeoutStartSec=300
+
+[Install]
+WantedBy=multi-user.target
