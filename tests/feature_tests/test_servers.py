@@ -10,6 +10,17 @@ from cyberfusion.DatabaseSupport.database_users import DatabaseUser
 from cyberfusion.DatabaseSupport.servers import Server
 from cyberfusion.DatabaseSupport.utilities import generate_random_string
 
+
+@pytest.mark.mariadb
+def test_get_global_status_variable(mariadb_server: Server) -> None:
+    assert mariadb_server.get_global_status_variable("Acl_procedure_grants") == "0"
+
+
+@pytest.mark.mariadb
+def test_get_global_status_variable_not_exists(mariadb_server: Server) -> None:
+    assert mariadb_server.get_global_status_variable("foobar") is None
+
+
 # Databases
 
 

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python3-cyberfusion-database-support"
-version = "3.2.2"
+version = "3.3"
 description = "Library for MariaDB and PostgreSQL."
 readme = "README.md"
 authors = [
@@ -17,7 +17,11 @@ dependencies = [
     "SQLAlchemy-Utils==0.41.1",
     "python3-cyberfusion-common~=2.12",
     "pydantic==2.12.5",
+    "typer[all]==0.23.1",
 ]
+
+[project.scripts]
+mariadb-wait-wsrep-ready = "cyberfusion.DatabaseSupport.scripts.wait_wsrep_ready:app"
 
 [project.urls]
 "Source" = "https://github.com/CyberfusionIO/python3-cyberfusion-database-support"

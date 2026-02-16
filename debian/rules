@@ -6,3 +6,6 @@ export PYBUILD_DISABLE=test
 
 %:
 	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_installsystemd:
+	dh_installsystemd --name=wait-wsrep-ready --no-start --no-enable
