@@ -33,8 +33,8 @@ from cyberfusion.DatabaseSupport.utilities import (
 class Database:
     """Abstract representation of database."""
 
-    MYSQLDUMP_BIN = try_find_executable("mysqldump")
-    MYSQL_BIN = try_find_executable("mysql")
+    MYSQLDUMP_BIN = try_find_executable("mariadb-dump")
+    MYSQL_BIN = try_find_executable("mariadb")
 
     PATH_DUMP = os.path.join(os.path.sep, "tmp", "database-support-dumps")
 
