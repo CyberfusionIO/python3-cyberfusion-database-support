@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python3-cyberfusion-database-support"
-version = "3.3.1"
+version = "3.3.2"
 description = "Library for MariaDB and PostgreSQL."
 readme = "README.md"
 authors = [
@@ -13,11 +13,11 @@ authors = [
 dependencies = [
     "psycopg2-binary==2.9.11",
     "PyMySQL==1.1.2",
-    "SQLAlchemy==2.0.46",
+    "SQLAlchemy==2.0.48",
     "SQLAlchemy-Utils==0.41.1",
     "python3-cyberfusion-common~=2.12",
     "pydantic==2.12.5",
-    "typer[all]==0.23.1",
+    "typer[all]==0.24.1",
 ]
 
 [project.scripts]
