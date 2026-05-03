@@ -1,11 +1,11 @@
 """Classes for interaction with tables."""
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
-from sqlalchemy.schema import Table as SQLAlchemyTable
+from sqlalchemy.schema import Index, Table as SQLAlchemyTable
 from sqlalchemy.sql import text
 
-from cyberfusion.DatabaseSupport.exceptions import InvalidInputError
+from cyberfusion.DatabaseSupport.exceptions import IndexExistsError, InvalidInputError
 
 if TYPE_CHECKING:  # pragma: no cover
     from cyberfusion.DatabaseSupport.databases import Database
@@ -87,6 +87,33 @@ class Table:
     def reflection(self) -> SQLAlchemyTable:
         """Get reflected table from database."""
         return self.database.metadata.tables[self._table_name_with_schema_name]
+
+    @object_exists
+    def create_index(self, *, name: str, columns: List[str]) -> None:
+        """Create index on table."""
+        reflection = self.reflection
+
+        for existing_index in reflection.indexes:
+            if existing_index.name == name:
+                raise IndexExistsError(name)
+
+        index = Index(
+            name,
+            *[reflection.c[column] for column in columns],
+        )
+
+        index.create(bind=self.database.database_engine)
+
+    @object_exists
+    def get_indexes_by_column(self, *, column: str) -> List[Index]:
+        """Get indexes that contain given column."""
+        indexes = []
+
+        for index in self.reflection.indexes:
+            if column in [c.name for c in index.columns]:
+                indexes.append(index)
+
+        return indexes
 
     @object_exists
     def drop(self) -> bool:
