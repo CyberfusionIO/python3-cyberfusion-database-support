@@ -17,6 +17,12 @@ class ServerNotSupportedError(Exception):
     pass
 
 
+class IndexExistsError(Exception):
+    """Index already exists."""
+
+    pass
+
+
 class PasswordMissingError(Exception):
     """Password missing."""
 
