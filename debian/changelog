@@ -1,3 +1,9 @@
+python3-cyberfusion-database-support (3.5.1) unstable; urgency=low
+
+  - Fix Typer dependency
+
+ -- William Edwards <wedwards@cyberfusion.nl>  Sun, 31 May 2026 15:50:00 +0200
+
 python3-cyberfusion-database-support (3.5) unstable; urgency=low
 
   - Add index lengths
