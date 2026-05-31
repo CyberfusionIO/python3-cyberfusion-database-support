@@ -196,6 +196,41 @@ def test_mariadb_table_create_index(
 
 
 @pytest.mark.mariadb
+def test_mariadb_table_create_index_with_lengths(
+    mariadb_table_created_1: Generator[Table, None, None],
+) -> None:
+    index_name = generate_random_string()
+
+    mariadb_table_created_1.create_index(
+        name=index_name,
+        columns=["user_name", "email_address"],
+        lengths={"user_name": 5},
+    )
+
+    indexes = {
+        index.name: index for index in mariadb_table_created_1.reflection.indexes
+    }
+
+    assert index_name in indexes
+
+    dialect_options = indexes[index_name].dialect_options["mysql"]
+
+    assert dialect_options["length"] == {"user_name": 5}
+
+
+@pytest.mark.postgresql
+def test_postgresql_table_create_index_with_lengths_not_supported(
+    postgresql_table_created_1: Generator[Table, None, None],
+) -> None:
+    with pytest.raises(ServerNotSupportedError):
+        postgresql_table_created_1.create_index(
+            name=generate_random_string(),
+            columns=["user_name"],
+            lengths={"user_name": 5},
+        )
+
+
+@pytest.mark.mariadb
 def test_mariadb_table_create_index_with_other_index_existing(
     mariadb_table_created_1: Generator[Table, None, None],
 ) -> None:

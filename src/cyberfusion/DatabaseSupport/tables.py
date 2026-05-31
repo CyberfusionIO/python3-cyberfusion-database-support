@@ -1,6 +1,6 @@
 """Classes for interaction with tables."""
 
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from sqlalchemy.schema import Index, Table as SQLAlchemyTable
 from sqlalchemy.sql import text
@@ -89,7 +89,13 @@ class Table:
         return self.database.metadata.tables[self._table_name_with_schema_name]
 
     @object_exists
-    def create_index(self, *, name: str, columns: List[str]) -> None:
+    def create_index(
+        self,
+        *,
+        name: str,
+        columns: List[str],
+        lengths: Optional[Dict[str, int]] = None,
+    ) -> None:
         """Create index on table."""
         reflection = self.reflection
 
@@ -97,9 +103,21 @@ class Table:
             if existing_index.name == name:
                 raise IndexExistsError(name)
 
+        kwargs: Dict[str, Any] = {}
+
+        if lengths:
+            if (
+                self.database.server_software_name
+                != self.database.support.MARIADB_SERVER_SOFTWARE_NAME
+            ):
+                raise ServerNotSupportedError
+
+            kwargs["mysql_length"] = lengths
+
         index = Index(
             name,
             *[reflection.c[column] for column in columns],
+            **kwargs,
         )
 
         index.create(bind=self.database.database_engine)
